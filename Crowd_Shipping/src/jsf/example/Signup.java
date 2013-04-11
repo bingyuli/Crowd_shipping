@@ -1,0 +1,154 @@
+package jsf.example;
+
+import java.sql.*;
+
+public class Signup 
+{
+	private String url, user_address_query, user_details_query, login_query;
+	private Connection conn;
+	private PreparedStatement ud_pstmt, ua_pstmt, login;
+	private int ud_rs,ua_rs, user_login;
+	
+	private String email = "myexample@abc.com", fname = "Bob", lname = "Jones",
+			street1 = "101", street2 = "E San Fernando Street", city = "San Jose",
+			state = "CA", country = "USA", password;
+	private int zip = 12345;
+	private Long mobile = Long.parseLong("1234567890");
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getFname() {
+		return fname;
+	}
+	
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+	
+	public String getLname() {
+		return lname;
+	}
+	
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+	
+	public String getStreet1() {
+		return street1;
+	}
+	
+	public void setStreet1(String street1) {
+		this.street1 = street1;
+	}
+	
+	public String getStreet2() {
+		return street2;
+	}
+	
+	public void setStreet2(String street2) {
+		this.street2 = street2;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+	
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	public String getState() {
+		return state;
+	}
+	
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	public String getCountry() {
+		return country;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
+	public int getZip() {
+		return zip;
+	}
+	
+	public void setZip(int zip) {
+		this.zip = zip;
+	}
+	
+	public Long getMobile() {
+		return mobile;
+	}
+	
+	public void setMobile(Long mobile) {
+		this.mobile = mobile;
+	}
+	
+	public String getPassword(){
+		return this.password;
+	}
+	
+	public void setPassword(String password){
+		this.password = password;
+	}
+	
+	public String registerUser()
+	{
+		url = "jdbc:mysql://localhost:3306/crowd_shipping";
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url,"root","root");
+			
+			user_details_query = "insert into user_details values(?,?,?,?)";
+			user_address_query = "insert into user_address values(?,?,?,?,?,?,?)";
+			login_query = "insert into login values (?,?)";
+			
+			ud_pstmt = conn.prepareStatement(user_details_query);
+			ud_pstmt.setString(1, fname);
+			ud_pstmt.setString(2, lname);
+			ud_pstmt.setLong(3, mobile);
+			ud_pstmt.setString(4, email);
+			
+			ua_pstmt = conn.prepareStatement(user_address_query);
+			ua_pstmt.setString(1, email);
+			ua_pstmt.setString(2, street1);
+			ua_pstmt.setString(3, street2);
+			ua_pstmt.setString(4, city);
+			ua_pstmt.setString(5, state);
+			ua_pstmt.setString(6, country);
+			ua_pstmt.setInt(7, zip);
+			
+			login = conn.prepareStatement(login_query);
+			login.setString(1, email);
+			login.setString(2, password);
+			
+			ud_rs = ud_pstmt.executeUpdate();
+			ua_rs = ua_pstmt.executeUpdate();
+			user_login = login.executeUpdate();
+			
+			if(ud_rs > 0 && ua_rs > 0 && user_login > 0)
+				return "Success";
+			else
+				return "Failed";
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "Failed";
+		}
+		
+	}
+	}
+
