@@ -70,5 +70,8 @@
 	 <lifecycle>
 <phase-listener>jsf.security.AuthorizationListener</phase-listener>
 </lifecycle>
+<factory>
+    <render-kit-factory>org.omnifaces.renderkit.Html5RenderKitFactory</render-kit-factory>
+</factory>
 	
 </faces-config>

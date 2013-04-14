@@ -56,6 +56,7 @@ public class Login {
 			{
 				
 				isLoggedIn = true;
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
 				//pstmt.close();
 				//rs.close();
 				//return "Success";
@@ -75,7 +76,7 @@ public class Login {
 			{
 				this.username = rs.getString("fname");
 				FacesContext context = FacesContext.getCurrentInstance();
-				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
+				//FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
 				System.out.println("Login Done");
 				context.getExternalContext().redirect("Profile.jsp");
 			}

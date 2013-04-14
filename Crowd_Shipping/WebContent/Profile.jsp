@@ -68,11 +68,11 @@
             </center>
             </div>
         	<div class="left_content"> 
-                       <h:commandButton action="#{profile.signout}" value="SignOut"></h:commandButton>
+                       
                 <div class="box290">
                 <h2>Navigate</h2>
                     <ul class="left_menu">
-                        <li></li>
+                        <li><h:commandLink action="#{profile.signout}" value="SignOut"></h:commandLink></li>
                         <li>Notifications <span class="badge badge-important">6</span></li>
                         <li><a href="about.html" title="" >Locations</a></li>
                     </ul>
@@ -107,11 +107,18 @@
 					
 				<h2> Tell us about your plans</h2>
 				<p> Where are you headed ?</p>
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="4">
 					<h:outputLabel>From: </h:outputLabel>
-					<h:inputText id="source" value="#{profile.source}"></h:inputText>
+					<h:inputText id="source" value="#{profile.fromCity}"></h:inputText>
+					
+					<h:outputLabel>Zip: </h:outputLabel>
+					<h:inputText id="sourceZip" value="#{profile.fromZip}"></h:inputText>
+					
 					<h:outputLabel>To: </h:outputLabel>
 					<h:inputText id="destination" value="#{profile.destination}"></h:inputText>
+					
+					<h:outputLabel>Zip: </h:outputLabel>
+					<h:inputText id="destinationZip" value="#{profile.destination}"></h:inputText>
 				</h:panelGrid>
 				<h:panelGrid columns="4">
 					<h:outputLabel>When: </h:outputLabel>

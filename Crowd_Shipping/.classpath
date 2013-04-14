@@ -27,10 +27,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Connector"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSF 2.1"/>
-	<classpathentry kind="lib" path="C:/Users/Kashyap/Desktop/binaries/html5-comp-lib-core-0.0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Kashyap/Desktop/binaries/html5-comp-lib-core-0.0.3-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Kashyap/Desktop/binaries/myfaces-shared-html5-0.0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Kashyap/Desktop/binaries/myfaces-shared-html5-0.0.3-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

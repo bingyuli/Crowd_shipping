@@ -14,7 +14,7 @@
 <h:form id="Signup">
 <div id="main_container">
 
-       
+      
 	<div class="header">
 
             <div class="logo"><a href="index.html">Crowd Shipping</a></div>

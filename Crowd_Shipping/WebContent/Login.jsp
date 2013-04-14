@@ -93,7 +93,7 @@ Cufon.replace('.pages_banner', { fontFamily: 'GeosansLight' });
             </ul>
         <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
-        <li><a href="">Portfolio</a></li>
+        <li><a href="Signup.jsp" title="">Join</a></li>
         <li><a href="">Testimonials</a></li>
         <li><a href="">Blog</a></li>
         <li><a href="contact.html">Contact</a></li>

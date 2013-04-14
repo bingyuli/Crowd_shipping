@@ -1,6 +1,10 @@
 package jsf.example;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,7 +21,12 @@ public class Profile
 	private static Map<String,Object> yearValue;
 	private static String source, destination;
 	private static String username;
+	private String fromCity, toCity, url, address_query;
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
 	
+	private int fromZip, toZip;
 //	static
 //	{
 //		monthValue = new LinkedHashMap<String, Object>();
@@ -55,6 +64,12 @@ public class Profile
 		{
 			yearValue.put(year[k], year[k]); 
 		}
+		
+		username = String.valueOf(((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getAttribute("username"));
+		System.out.println(username);
+		
+		getUserInfo();
+		
 		
 		System.out.println("Intialization Done");
 		if(!Login.isLoggedIn)
@@ -162,6 +177,63 @@ public class Profile
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getFromCity() {
+		return fromCity;
+	}
+
+	public void setFromCity(String fromCity) {
+		this.fromCity = fromCity;
+	}
+
+	public String getToCity() {
+		return toCity;
+	}
+
+	public void setToCity(String toCity) {
+		this.toCity = toCity;
+	}
+
+	public int getFromZip() {
+		return fromZip;
+	}
+
+	public void setFromZip(int fromZip) {
+		this.fromZip = fromZip;
+	}
+
+	public int getToZip() {
+		return toZip;
+	}
+
+	public void setToZip(int toZip) {
+		this.toZip = toZip;
+	}
 	
-	
+	public void getUserInfo()
+	{
+		url = "jdbc:mysql://localhost:3306/crowd_shipping";
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url,"root","root");
+			
+			address_query = "select city, zip from user_address where email = ?";
+			
+			pstmt = conn.prepareStatement(address_query);
+			pstmt.setString(1, username);
+//			pstmt.setString(2, password);
+//			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+			{
+				fromCity = rs.getString("city");
+				fromZip = rs.getInt("zip");
+			}
+//		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
 }
