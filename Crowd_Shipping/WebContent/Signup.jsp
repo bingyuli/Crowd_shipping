@@ -10,6 +10,8 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap.css">
 </head>
 <body>
+<f:view>
+<h:form id="Signup">
 <div id="main_container">
 
        
@@ -55,14 +57,12 @@
         <li><a href="contact.html">Contact</a></li>
         </ul>
     </div>
-    </div>
-    <f:view>
+    
+    
     <script type="text/javascript">
 	function checkPassword()
 	{
 		var pwd = document.getElementById("Signup:pwd").value;
-		var regex = "/!/#/$/%/"
-		
 		if(/[a-z]/.test(pwd) && /[A-Z]/.test(pwd) && /\d/.test(pwd) && /[_\W]/.test(pwd))
 		{
 			document.getElementById("Signup:error1").style.display = 'none';
@@ -80,8 +80,11 @@
 	
 </script>
 
-	<h:form id="Signup">
-	<div class="center_content_pages" style="position: fixed; top: 25%; left: 25%"> 
+	
+	<div class="center_content_pages" > 
+	<div class="pages_banner" style="left: 5%; top: 20%">
+		<center>Sign up with the crowd</center>
+	</div>
 	<table style="width:auto">
 	<tr>
 		<td ><h:outputLabel >First Name: </h:outputLabel></td>
@@ -123,17 +126,28 @@
 		<td><h:inputText id="mobile" value="#{Signup.mobile}" maxlength="10" styleClass="form_input" onfocus="if(this.value == '1234567890') this.value=''"></h:inputText></td>
 	</tr>
 	</table>
-	<table>
-		<tr>
+		<div style="text-align: center">
+		<h:commandButton action="#{Signup.registerUser}" styleClass="btn btn-success" value="Signup"></h:commandButton>
+		</div>
+		<h:outputLabel id="error1" style="visibility: hidden"></h:outputLabel>
 		
-		<h:commandButton action="#{Signup.registerUser}" styleClass="btn btn-success" value="Signup" style="width: auto; position: fixed; left: 50%"></h:commandButton>
-		</tr>
-		<tr>
-		<td><h:outputLabel id="error1" style="visibility: hidden"></h:outputLabel></td>
-		</tr>
-	</table>
 	</div>
+	<div class="clear"></div>
 	
+	<div class="footer">
+    <div class="copyrights">
+    Group 8 Spirit 
+    </div>
+    <div class="footer_right">
+    <a href="#">Home</a>
+    <a href="#">About Us</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Contact Us</a>
+    </div>
+    <div class="clear"></div>
+</div>
+	
+	</div>
 	</h:form>
 
 </f:view>

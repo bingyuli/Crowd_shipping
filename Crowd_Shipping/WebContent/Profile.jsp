@@ -1,3 +1,4 @@
+<%@page import="jsf.example.Login"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
 <%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
@@ -9,9 +10,11 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/adaria/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap.css">
 </head>
-<body>
 
+<body onload="checkLogin()">
+ 
 <f:view>
+<h:form id="Profile">
 <div id="main_container">
 
        
@@ -65,13 +68,13 @@
             </center>
             </div>
         	<div class="left_content"> 
-                       
+                       <h:commandButton action="#{profile.signout}" value="SignOut"></h:commandButton>
                 <div class="box290">
-                <h2>Subpages</h2>
+                <h2>Navigate</h2>
                     <ul class="left_menu">
+                        <li></li>
                         <li>Notifications <span class="badge badge-important">6</span></li>
-                        <li><a href="about.html" title="">Departments</a></li>
-                        <li><a href="about.html" title="">Locations</a></li>
+                        <li><a href="about.html" title="" >Locations</a></li>
                     </ul>
                 </div>
                 
@@ -151,7 +154,7 @@
 </div>
 
 </div> <!--end of main container-->
-
+</h:form>
 </f:view>
 </body>
 </html>

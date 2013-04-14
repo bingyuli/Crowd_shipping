@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
 <%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 5 Transitional//EN" "http://www.w3.org/TR/html5/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -15,6 +15,34 @@ $(document).ready(function(){
 	$("#featured > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 5000, true);
 });
 </script>
+</head> 
+<body>  
+    
+<f:view>
+<h:form id="login">
+
+<script type="text/javascript">
+	function checkPassword()
+	{
+		var pwd = document.getElementById("login:pwd").value;
+		
+		if(/[a-z]/.test(pwd) && /[A-Z]/.test(pwd) && /\d/.test(pwd) && /[_\W]/.test(pwd))
+		{
+			document.getElementById("login:error1").style.display = 'none';
+			return true;
+		}
+		else
+		{
+			//document.write("Its inside else!");
+			document.getElementById("login:error1").style.visibility = 'visible';
+			document.getElementById("login:error1").innerHTML = "Error in password";
+			return false;
+		}
+			
+	}
+	
+</script>
+
 <!-- Cufon START  -->
 <script type="text/javascript" src="js/cufon-yui.js"></script>
 <script src="js/GeosansLight_500.font.js" type="text/javascript"></script>
@@ -26,8 +54,6 @@ Cufon.replace('.pages_banner', { fontFamily: 'GeosansLight' });
 </script>    
 <!-- Cufon END  -->
 
-</head>
-<body>
 <div id="main_container">
 
        
@@ -73,39 +99,14 @@ Cufon.replace('.pages_banner', { fontFamily: 'GeosansLight' });
         <li><a href="contact.html">Contact</a></li>
         </ul>
     </div>
-    
-    </div>
-<f:view>
-<script type="text/javascript">
-	function checkPassword()
-	{
-		var pwd = document.getElementById("login:pwd").value;
-		var regex = "/!/#/$/%/"
-		
-		if(/[a-z]/.test(pwd) && /[A-Z]/.test(pwd) && /\d/.test(pwd) && /[_\W]/.test(pwd))
-		{
-			document.getElementById("login:error1").style.display = 'none';
-			return true;
-		}
-		else
-		{
-			//document.write("Its inside else!");
-			document.getElementById("login:error1").style.visibility = 'visible';
-			document.getElementById("login:error1").innerHTML = "Error in password";
-			return false;
-		}
-			
-	}
-	
-</script>
 
-	<h:form id="login">
-	
-	<div id="center">
+	<div class="center_content_pages" align="center">
+	<div class="pages_banner" style="left: 5%; top: 20%">
+		<center>Login</center>
+	</div>
 		<h:panelGrid columns="2" style="panel-layout:fixed">
 			<h:outputLabel id="email" styleClass="more">E-mail: </h:outputLabel>
-			<h:inputText id="uname" value="#{login.username}" style="placeholder: myexample@abc.com" onfocus="if(this.value == 'myexample@abc.com') this.value=''" styleClass="form_input">
-				
+			<h:inputText id="uname" value="#{login.username}" required="true" requiredMessage="E-mail is required" onfocus="if(this.value == 'myexample@abc.com') this.value=''" styleClass="form_input">
 			</h:inputText>
 			<h:outputLabel styleClass="more">Password: </h:outputLabel>
 			<h:inputSecret id="pwd" value="#{login.password}" onkeypress="checkPassword()" onblur="checkPassword()" styleClass="form_input"></h:inputSecret>
@@ -119,6 +120,9 @@ Cufon.replace('.pages_banner', { fontFamily: 'GeosansLight' });
 	
 	</h:messages>		
 	
+	<div class="clear"></div>
+	</div>
+<br/><br/><br/><br/><br/><br/><br/><br/>	
 	<div class="footer">
     <div class="copyrights">
     Group 8 Spirit 
@@ -131,10 +135,13 @@ Cufon.replace('.pages_banner', { fontFamily: 'GeosansLight' });
     </div>
     <div class="clear"></div>
 </div>
-	
+
 	
 	</div>
 	</h:form>
-</f:view>
+	</f:view>
+	
+	
+
 </body>
 </html>

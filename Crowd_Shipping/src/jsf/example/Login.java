@@ -13,7 +13,7 @@ public class Login {
 	private PreparedStatement pstmt, pstmt1;
 	private ResultSet rs, rs1;
 	private String username = "myexample@abc.com", password;
-	private boolean isLoggedIn ;
+	public static boolean isLoggedIn ;
 	
 	public String getUsername()
 	{
@@ -75,6 +75,8 @@ public class Login {
 			{
 				this.username = rs.getString("fname");
 				FacesContext context = FacesContext.getCurrentInstance();
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
+				System.out.println("Login Done");
 				context.getExternalContext().redirect("Profile.jsp");
 			}
 		}
