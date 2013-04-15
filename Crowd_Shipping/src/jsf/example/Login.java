@@ -55,6 +55,7 @@ public class Login {
 			{
 				
 				isLoggedIn = true;
+				FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
 				//pstmt.close();
 				//rs.close();

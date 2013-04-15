@@ -28,6 +28,7 @@ public class Profile
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private String serviceSelected;
+	private boolean isLoggedIn;
 	
 	private int fromZip, toZip;
 //	static
@@ -87,15 +88,18 @@ public class Profile
 	public String signout() 
 	{
 		System.out.println("hello");
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(username);
-		
-//		HttpSession session = ((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false));
-//		if(session != null)
-//		{
-//			System.out.println("Session not null");
-//			session.invalidate();
-//		}
+//		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+//		
+//		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(username);
+//		
+		HttpSession session = ((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true));
+		if(session != null)
+		{
+			System.out.println("Session not null");
+			session.removeAttribute(username);
+			session.invalidate();
+			Login.isLoggedIn = false;
+		}
 //	    try {
 //	    	System.out.println("hello2");
 //			FacesContext.getCurrentInstance().getExternalContext().redirect("Login.jsp?faces-redirect=true");
@@ -268,6 +272,15 @@ public class Profile
 		{
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("Send.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(this.serviceSelected.equalsIgnoreCase("Receive"))
+		{
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("Receive.jsp");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

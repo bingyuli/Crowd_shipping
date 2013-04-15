@@ -3,9 +3,6 @@
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
 <%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<meta http-equiv="pragma" content="no-cache"/>
-<meta http-equiv="cache-control" content="no-cache"/>  
-<meta http-equiv="expires" content="-1" />
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -103,7 +100,7 @@
                     <div class="form">
 					<h2>Select a service</h2>
 					
-					<h:selectOneMenu value="#{profile.serviceSelected}" valueChangeListener="#{profile.serviceRedirect}">
+					<h:selectOneMenu value="#{profile.serviceSelected}" valueChangeListener="#{profile.serviceRedirect}" onchange="this.form.submit();">
 						<f:selectItem itemValue="Select a service" value="Select a service" itemLabel="Select a service"/>
 						<f:selectItem itemValue="Send" value="Send" itemLabel="Send"/>
 						<f:selectItem itemValue="Receive" value="Receive" itemLabel="Receive"/>
