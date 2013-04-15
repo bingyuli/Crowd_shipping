@@ -50,7 +50,6 @@ public class Login {
 			pstmt.setString(2, password);
 			
 			rs = pstmt.executeQuery();
-			System.out.println(password);
 			//System.out.println(rs.getString(1));
 			if(rs.next())
 			{
@@ -59,12 +58,12 @@ public class Login {
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
 				//pstmt.close();
 				//rs.close();
-				//return "Success";
+				
 			}
 			else
 			{
 				FacesContext.getCurrentInstance().addMessage("login:btnLogin", new FacesMessage("Invalid Username or Password"));
-				//return "Failed";
+				
 			}
 			
 			pstmt = conn.prepareStatement(userquery);
@@ -77,7 +76,6 @@ public class Login {
 				this.username = rs.getString("fname");
 				FacesContext context = FacesContext.getCurrentInstance();
 				//FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
-				System.out.println("Login Done");
 				context.getExternalContext().redirect("Profile.jsp");
 			}
 		}

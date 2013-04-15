@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
 <%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 5 Transitional//EN" "http://www.w3.org/TR/html5/loose.dtd">
 <html>
 <head>
@@ -109,10 +110,10 @@ Cufon.replace('.pages_banner', { fontFamily: 'GeosansLight' });
 			<h:inputText id="uname" value="#{login.username}" required="true" requiredMessage="E-mail is required" onfocus="if(this.value == 'myexample@abc.com') this.value=''" styleClass="form_input">
 			</h:inputText>
 			<h:outputLabel styleClass="more">Password: </h:outputLabel>
-			<h:inputSecret id="pwd" value="#{login.password}" onkeypress="checkPassword()" onblur="checkPassword()" styleClass="form_input"></h:inputSecret>
+			<h:inputSecret id="pwd" value="#{login.password}" styleClass="form_input"></h:inputSecret>
 		</h:panelGrid>
 	<h:panelGrid >
-		<h:commandButton id="btnLogin" action="#{login.checkUser}" value="Login" styleClass="btn btn-success" style="position: fixed; left: 50%"></h:commandButton>
+		<h:commandButton id="btnLogin" action="#{login.checkUser}" value="Login" styleClass="btn btn-success" style="left: 50%"></h:commandButton>
 	</h:panelGrid>
 	
 	<h:outputLabel id="error1" style="visibility: hidden"></h:outputLabel>

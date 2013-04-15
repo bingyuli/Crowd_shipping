@@ -61,7 +61,11 @@
   </context-param>
   <context-param>
   	<param-name>org.apache.myfaces.html5</param-name>
-  	<param-value>/WEB-INF/lib</param-value>
+  	<param-value>/WEB-INF/lib/</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>myfaces.apache.org.html5.tag</param-name>
+  	<param-value>/WEB-INF/lib/</param-value>
   </context-param>
   <listener>
     <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>

@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class Profile 
@@ -25,6 +27,7 @@ public class Profile
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
+	private String serviceSelected;
 	
 	private int fromZip, toZip;
 //	static
@@ -66,12 +69,9 @@ public class Profile
 		}
 		
 		username = String.valueOf(((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getAttribute("username"));
-		System.out.println(username);
 		
 		getUserInfo();
 		
-		
-		System.out.println("Intialization Done");
 		if(!Login.isLoggedIn)
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -88,15 +88,29 @@ public class Profile
 	{
 		System.out.println("hello");
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	    try {
-	    	System.out.println("hello2");
-			FacesContext.getCurrentInstance().getExternalContext().redirect("Login.jsp");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("hello3");
-			e.printStackTrace();
-		}
-	     return "loginpage";
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(username);
+		
+//		HttpSession session = ((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false));
+//		if(session != null)
+//		{
+//			System.out.println("Session not null");
+//			session.invalidate();
+//		}
+//	    try {
+//	    	System.out.println("hello2");
+//			FacesContext.getCurrentInstance().getExternalContext().redirect("Login.jsp?faces-redirect=true");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println("hello3");
+//			e.printStackTrace();
+//		}
+//		try {
+//			((HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse()).sendRedirect("Login.jsp");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	     return "Login?faces-redirect=true";
 	}
 	
 	public String check()
@@ -235,5 +249,29 @@ public class Profile
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-	}	
+	}
+
+	public String getServiceSelected() {
+		return serviceSelected;
+	}
+
+	public void setServiceSelected(String serviceSelected) {
+		
+		this.serviceSelected = serviceSelected;
+		
+	}
+	
+	public void serviceRedirect(ValueChangeEvent ve)
+	{
+		this.serviceSelected = (String)ve.getNewValue();
+		if(this.serviceSelected.equalsIgnoreCase("Send"))
+		{
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("Send.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }

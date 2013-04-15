@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13648583213582" configfile="/Crowd_Shipping/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="Login" x="155" y="63" id="pf13648604157263" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" outlinks="pf13648604157264 pf13648604157265" inlinks="pf13658909072440" path="/Login.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="Login" x="155" y="63" id="pf13648604157263" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" outlinks="pf13648604157264 pf13648604157265" path="/Login.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="LoginSuccess" x="460" y="68" id="pf13648604157276" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf13648604157264 pf13654646678980" path="/LoginSuccess.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="FailedLogin" x="459" y="251" id="pf13648604157277" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf13648604157265 pf13654646678981" path="/FailedLogin.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="Signup" x="136" y="222" id="pf13654646678982" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13654646678980 pf13654646678981" path="/Signup.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="Profile" x="43" y="211" id="pf13658909072461" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf13658909072440" path="/Profile.jsp"/>
   <links id="pf13648604157264" target="pf13648604157276" source="pf13648604157263" outcome="Success"/>
   <links id="pf13648604157265" target="pf13648604157277" source="pf13648604157263" outcome="Failed"/>
   <links id="pf13654646678980" target="pf13648604157276" source="pf13654646678982" outcome="Success"/>
   <links id="pf13654646678981" target="pf13648604157277" source="pf13654646678982" outcome="Failed"/>
-  <links id="pf13658909072440" target="pf13648604157263" source="pf13658909072461" outcome="Login" redirect="true" fromaction="#{profile.signout}"/>
 </pageflow:Pageflow>
