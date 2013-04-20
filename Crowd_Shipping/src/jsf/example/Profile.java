@@ -81,7 +81,7 @@ public class Profile
 		}
 		
 		username = String.valueOf(((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getAttribute("username"));
-		
+		System.out.println(username);
 		getUserInfo();
 		
 	}

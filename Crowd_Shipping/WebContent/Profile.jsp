@@ -46,22 +46,7 @@
             </div>
 
     </div> <!--end of header-->
-    <div class="menu">
-        <ul class="nav nav-pills">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Services<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-            <li><a href="Send.jsp" title="">Send</a></li>
-            <li><a href="Receive.jsp" title="">Receive</a></li>
-            </ul>
-        </li>
-        <li><a href="Signup.jsp" title="">Join</a></li>
-        <li><a href="">Testimonials</a></li>
-        <li><a href="">Blog</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </div>
+
     
 	<div class="center_content_pages">
         	<div class="pages_banner" style="left: 5%; top: 20%">
@@ -135,7 +120,7 @@
             
             
         <div class="clear"></div>
-        </div>  
+          
 
 <div class="footer">
     <div class="copyrights">

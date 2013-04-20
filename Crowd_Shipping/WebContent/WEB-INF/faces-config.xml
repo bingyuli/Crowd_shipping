@@ -52,16 +52,16 @@
 		<display-name>Signup</display-name>
 		<from-view-id>/Signup.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>Success</from-outcome>
-			<to-view-id>/LoginSuccess.jsp</to-view-id>
+			<from-outcome>Failed</from-outcome>
+			<to-view-id>/FailedLogin.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<display-name>Signup</display-name>
 		<from-view-id>/Signup.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>Failed</from-outcome>
-			<to-view-id>/FailedLogin.jsp</to-view-id>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/Login.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
