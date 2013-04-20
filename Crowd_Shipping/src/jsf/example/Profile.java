@@ -53,6 +53,17 @@ public class Profile
 	
 	public Profile()
 	{
+		if(!Login.isLoggedIn)
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			try {
+				context.getExternalContext().redirect("Login.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		monthValue = new LinkedHashMap<String, Object>();
 		dayValue = new LinkedHashMap<String, Object>();
 		yearValue = new LinkedHashMap<String, Object>();
@@ -73,16 +84,6 @@ public class Profile
 		
 		getUserInfo();
 		
-		if(!Login.isLoggedIn)
-		{
-			FacesContext context = FacesContext.getCurrentInstance();
-			try {
-				context.getExternalContext().redirect("Login.jsp");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public String signout() 
@@ -96,7 +97,7 @@ public class Profile
 		if(session != null)
 		{
 			System.out.println("Session not null");
-			session.removeAttribute(username);
+			//session.removeAttribute(username);
 			session.invalidate();
 			Login.isLoggedIn = false;
 		}

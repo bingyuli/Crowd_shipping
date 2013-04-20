@@ -9,11 +9,8 @@ public class Signup
 	private PreparedStatement ud_pstmt, ua_pstmt, login;
 	private int ud_rs,ua_rs, user_login;
 	
-	private String email = "myexample@abc.com", fname = "Bob", lname = "Jones",
-			street1 = "101", street2 = "E San Fernando Street", city = "San Jose",
-			state = "CA", country = "USA", password;
-	private int zip = 12345;
-	private Long mobile = Long.parseLong("1234567890");
+	private String email, fname, lname, street1, street2, city, state, country, password, zip;
+	private Long mobile;
 	
 	public String getEmail() {
 		return email;
@@ -79,11 +76,12 @@ public class Signup
 		this.country = country;
 	}
 	
-	public int getZip() {
+	public String getZip() 
+	{
 		return zip;
 	}
 	
-	public void setZip(int zip) {
+	public void setZip(String zip) {
 		this.zip = zip;
 	}
 	
@@ -128,7 +126,7 @@ public class Signup
 			ua_pstmt.setString(4, city);
 			ua_pstmt.setString(5, state);
 			ua_pstmt.setString(6, country);
-			ua_pstmt.setInt(7, zip);
+			ua_pstmt.setInt(7, Integer.parseInt(zip));
 			
 			login = conn.prepareStatement(login_query);
 			login.setString(1, email);

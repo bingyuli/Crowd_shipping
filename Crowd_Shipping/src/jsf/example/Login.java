@@ -12,8 +12,8 @@ public class Login {
 	private Connection conn;
 	private PreparedStatement pstmt, pstmt1;
 	private ResultSet rs, rs1;
-	private String username = "myexample@abc.com", password;
-	public static boolean isLoggedIn ;
+	private String username, password;
+	public static boolean isLoggedIn = false;
 	
 	public String getUsername()
 	{

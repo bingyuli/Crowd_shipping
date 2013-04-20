@@ -59,17 +59,15 @@
     <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
     <param-value>true</param-value>
   </context-param>
+  
   <context-param>
-  	<param-name>org.apache.myfaces.html5</param-name>
-  	<param-value>/WEB-INF/lib/</param-value>
-  </context-param>
-  <context-param>
-  	<param-name>myfaces.apache.org.html5.tag</param-name>
-  	<param-value>/WEB-INF/lib/</param-value>
-  </context-param>
-  <listener>
-    <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
-  </listener>
+   <param-name>org.omnifaces.HTML5_RENDER_KIT_PASSTHROUGH_ATTRIBUTES</param-name>
+   <param-value>
+     javax.faces.component.UIInput=x-webkit-speech,x-webkit-grammar;
+     javax.faces.component.UIComponent=contenteditable,draggable
+   </param-value>
+ </context-param>
+  
   <error-page>
 <exception-type>javax.faces.application.ViewExpiredException</exception-type>
 <location>/faces/Login.jsp</location>
@@ -80,5 +78,4 @@
 30
 </session-timeout>
 </session-config>
-
 </web-app>

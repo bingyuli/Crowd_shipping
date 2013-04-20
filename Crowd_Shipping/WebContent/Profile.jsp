@@ -9,9 +9,23 @@
 <title>Profile</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/adaria/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap-responsive.css">
 </head>
+<script type="text/javascript">
+	function setPlaceHolders()
+	{
+		var placeholders = ["Source","XXXX","Destination","XXXX"];
+		var elements = document.getElementsByTagName("input");
+		for (var i=0; i<elements.length; i++) 
+		{
+			//elements[i].setAttribute("required", "required");
+			elements[i].setAttribute("placeholder", placeholders[i]);
+		}
+		
+	}
+</script>
 
-<body onload="checkLogin()">
+<body onload="setPlaceHolders()">
  
 <f:view>
 <h:form id="Profile">
@@ -33,28 +47,16 @@
 
     </div> <!--end of header-->
     <div class="menu">
-        <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Us<!--[if IE 7]><!--></a><!--<![endif]-->
-        <!--[if lte IE 6]><table><tr><td><![endif]-->
-            <ul>
-            <li><a href="about.html" title="">Out Team</a></li>
-            <li><a href="about.html" title="">Departments</a></li>
-            <li><a href="about.html" title="">Locations</a></li>
+        <ul class="nav nav-pills">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Services<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+            <li><a href="Send.jsp" title="">Send</a></li>
+            <li><a href="Receive.jsp" title="">Receive</a></li>
             </ul>
-        <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
-        <li><a href="#">Services<!--[if IE 7]><!--></a><!--<![endif]-->
-        <!--[if lte IE 6]><table><tr><td><![endif]-->
-            <ul>
-            <li><a href="" title="">Webdesign</a></li>
-            <li><a href="" title="">Programming</a></li>
-            <li><a href="" title="">Development</a></li>
-            <li><a href="" title="">Coding</a></li>
-            </ul>
-        <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-        </li>
-        <li><a href="">Portfolio</a></li>
+        <li><a href="Signup.jsp" title="">Join</a></li>
         <li><a href="">Testimonials</a></li>
         <li><a href="">Blog</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -73,25 +75,12 @@
                 <h2>Navigate</h2>
                     <ul class="left_menu">
                         <li><h:commandLink action="#{profile.signout}" value="SignOut" ></h:commandLink></li>
-                        <li>Notifications <span class="badge badge-important">6</span></li>
+                        <li><h:commandLink action="Notifications.jsp">Notifications <span class="badge badge-important">6</span></h:commandLink> </li>
                         <li><a href="about.html" title="" >Locations</a></li>
                     </ul>
                 </div>
                 
-                <div class="box290">
-                  <h2>What clients say?</h2>
-                      <div class="testimonial">
-                            <div class="testimonial_quotes">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            <a href="#">John doe - company name</a>
-                            </div>
-                      </div> 
-                      <div class="testimonial">
-                            <div class="testimonial_quotes">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            <a href="#">John doe - company name</a>
-                            </div>
-                      </div>           
+                <div class="box290"> </div>           
                 </div>
             </div> <!--end of left content-->
 	
@@ -134,7 +123,7 @@
 					</h:selectOneMenu>
 				</h:panelGrid>
 				<h:panelGrid>
-					<h:commandButton value="Submit" styleClass="btn btn-success" style="width:auto; left:50%"></h:commandButton>
+					<h:commandButton value="Submit" styleClass="btn btn-inverse" style="width:auto; left:50%"></h:commandButton>
 				</h:panelGrid>	
 				
 					

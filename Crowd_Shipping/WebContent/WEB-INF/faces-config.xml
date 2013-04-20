@@ -27,6 +27,11 @@
 		<managed-bean-class>jsf.example.Logout</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>notifications</managed-bean-name>
+		<managed-bean-class>jsf.example.Notifications</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	<navigation-rule>
 		<display-name>Login</display-name>
 		<from-view-id>/Login.jsp</from-view-id>
@@ -59,12 +64,14 @@
 			<to-view-id>/FailedLogin.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<factory>
+    <render-kit-factory>org.omnifaces.renderkit.Html5RenderKitFactory</render-kit-factory>
+</factory>
+	
 	 <!--  <lifecycle>
 <phase-listener>jsf.security.AuthorizationListener</phase-listener>
 </lifecycle>-->
-<factory>
-    <render-kit-factory>org.omnifaces.renderkit.Html5RenderKitFactory</render-kit-factory>
-</factory>
 
 	
 </faces-config>

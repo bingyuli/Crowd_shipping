@@ -8,8 +8,10 @@
 <title>Sign Up</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/adaria/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap-responsive.css">
+
 </head>
-<body>
+<body onload="setPlaceHolders()">
 <f:view>
 <h:form id="Signup">
 <div id="main_container">
@@ -29,29 +31,17 @@
             </div>
 
     </div> <!--end of header-->
-    <div class="menu">
-        <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Us<!--[if IE 7]><!--></a><!--<![endif]-->
-        <!--[if lte IE 6]><table><tr><td><![endif]-->
-            <ul>
-            <li><a href="about.html" title="">Out Team</a></li>
-            <li><a href="about.html" title="">Departments</a></li>
-            <li><a href="about.html" title="">Locations</a></li>
+<div class="menu">
+        <ul class="nav nav-pills">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Services<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+            <li><a href="Send.jsp" title="">Send</a></li>
+            <li><a href="Receive.jsp" title="">Receive</a></li>
             </ul>
-        <!--[if lte IE 6]></td></tr></table></a><![endif]-->
         </li>
-        <li><a href="#">Services<!--[if IE 7]><!--></a><!--<![endif]-->
-        <!--[if lte IE 6]><table><tr><td><![endif]-->
-            <ul>
-            <li><a href="" title="">Webdesign</a></li>
-            <li><a href="" title="">Programming</a></li>
-            <li><a href="" title="">Development</a></li>
-            <li><a href="" title="">Coding</a></li>
-            </ul>
-        <!--[if lte IE 6]></td></tr></table></a><![endif]-->
-        </li>
-        <li><a href="">Portfolio</a></li>
+        <li><a href="Signup.jsp" title="">Join</a></li>
         <li><a href="">Testimonials</a></li>
         <li><a href="">Blog</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -60,22 +50,17 @@
     
     
     <script type="text/javascript">
-	function checkPassword()
+	
+    function setPlaceHolders()
 	{
-		var pwd = document.getElementById("Signup:pwd").value;
-		if(/[a-z]/.test(pwd) && /[A-Z]/.test(pwd) && /\d/.test(pwd) && /[_\W]/.test(pwd))
+		var placeholders = ["Larry","Page","test@abc.com","Password","Confirm Password", "San Jose State University", "One Washington Square", "San Jose", "CA", "USA", "XXXXX", "XXXXXXXXXX"];
+		var elements = document.getElementsByTagName("input");
+		for (var i=0; i<elements.length; i++) 
 		{
-			document.getElementById("Signup:error1").style.display = 'none';
-			return true;
+			elements[i].setAttribute("required", "required");
+			elements[i].setAttribute("placeholder", placeholders[i]);
 		}
-		else
-		{
-			//document.write("Its inside else!");
-			document.getElementById("Signup:error1").style.visibility = 'visible';
-			document.getElementById("Signup:error1").innerHTML = "Error in password";
-			return false;
-		}
-			
+		document.getElementById("Signup:email").setAttribute("type", "email");
 	}
 	
 </script>
@@ -85,7 +70,7 @@
 	<div class="pages_banner" style="left: 5%; top: 20%">
 		<center>Sign up with the crowd</center>
 	</div>
-	<table style="width:auto">
+	<table style="width:auto" align="center">
 	<tr>
 		<td ><h:outputLabel >First Name: </h:outputLabel></td>
 		<td><h:inputText id="fname" value="#{Signup.fname}"  styleClass="form_input" onfocus="if(this.value == 'Bob') this.value=''"></h:inputText></td>
@@ -98,36 +83,36 @@
 	</tr>
 	<tr>
 		<td><h:outputLabel>Password: </h:outputLabel></td>
-		<td><h:inputSecret id="pwd" value="#{Signup.password}" styleClass="form_input" onkeypress="checkPassword()" onblur="checkPassword()"></h:inputSecret></td>
+		<td><h:inputSecret id="pwd" value="#{Signup.password}" styleClass="form_input"></h:inputSecret></td>
 	
 		<!--  <td><h:outputLabel>Password must be 0-20 characters long and must contain a number, a letter, a capital letter and a special character. </h:outputLabel></td>-->
 		<td><h:outputLabel>Confirm Password: </h:outputLabel></td>
-		<td><h:inputSecret id="conpwd" value="" styleClass="form_input" onkeypress="checkPassword()" onblur="checkPassword()"></h:inputSecret></td>
+		<td><h:inputSecret id="conpwd" value="" styleClass="form_input"></h:inputSecret></td>
 	</tr>
 	<tr>	
 		<td><h:outputLabel>Street 1: </h:outputLabel></td>
-		<td><h:inputText id="street1" value="#{Signup.street1}" styleClass="form_input" onfocus="if(this.value == '101') this.value=''"></h:inputText></td>
+		<td><h:inputText id="street1" value="#{Signup.street1}" styleClass="form_input"></h:inputText></td>
 		<td align="right"><h:outputLabel>Street 2: </h:outputLabel></td>
-		<td><h:inputText id="street2" value="#{Signup.street2}" styleClass="form_input" onfocus="if(this.value == 'E San Fernando Street') this.value=''"></h:inputText></td>
+		<td><h:inputText id="street2" value="#{Signup.street2}" styleClass="form_input"></h:inputText></td>
 	</tr>
 	<tr>	
 		<td><h:outputLabel>City: </h:outputLabel></td>
-		<td><h:inputText id="city" value="#{Signup.city}" styleClass="form_input" onfocus="if(this.value == 'San Jose') this.value=''"></h:inputText></td>
+		<td><h:inputText id="city" value="#{Signup.city}" styleClass="form_input"></h:inputText></td>
 		<td align="right"><h:outputLabel>State: </h:outputLabel></td>
-		<td><h:inputText id="state" value="#{Signup.state}" styleClass="form_input" onfocus="if(this.value == 'CA') this.value=''"></h:inputText></td>
+		<td><h:inputText id="state" value="#{Signup.state}" styleClass="form_input"></h:inputText></td>
 	<tr>	
 		<td><h:outputLabel>Country: </h:outputLabel></td>
-		<td><h:inputText id="country" value="#{Signup.country}" styleClass="form_input" onfocus="if(this.value == 'USA') this.value=''"></h:inputText></td>
+		<td><h:inputText id="country" value="#{Signup.country}" styleClass="form_input"></h:inputText></td>
 		<td align="right"><h:outputLabel>Zip: </h:outputLabel></td>
-		<td><h:inputText id="zip" value="#{Signup.zip}" maxlength="5" styleClass="form_input" onfocus="if(this.value == '12345') this.value=''"></h:inputText></td>
+		<td><h:inputText id="zip" value="#{Signup.zip}" maxlength="5" styleClass="form_input"></h:inputText></td>
 	</tr>
 	<tr>
 		<td><h:outputLabel>Mobile: </h:outputLabel></td>
-		<td><h:inputText id="mobile" value="#{Signup.mobile}" maxlength="10" styleClass="form_input" onfocus="if(this.value == '1234567890') this.value=''"></h:inputText></td>
+		<td><h:inputText id="mobile" value="#{Signup.mobile}" maxlength="10" styleClass="form_input"></h:inputText></td>
 	</tr>
 	</table>
 		<div style="text-align: center">
-		<h:commandButton action="#{Signup.registerUser}" styleClass="btn btn-success" value="Signup"></h:commandButton>
+		<h:commandButton action="#{Signup.registerUser}" styleClass="btn btn-inverse" value="Signup"></h:commandButton>
 		</div>
 		<h:outputLabel id="error1" style="visibility: hidden"></h:outputLabel>
 		
