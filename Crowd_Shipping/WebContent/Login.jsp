@@ -99,7 +99,7 @@ Cufon.replace('.pages_banner', { fontFamily: 'GeosansLight' });
 	
 	<div class="clear"></div>
 	</div>
-<br/><br/><br/><br/><br/><br/><br/><br/>	
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>	
 	<div class="footer">
     <div class="copyrights">
     Group 8 Spirit 
