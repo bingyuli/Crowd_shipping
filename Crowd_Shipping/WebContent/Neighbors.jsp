@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Profile</title>
+<title>Neighbors</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/adaria/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap-responsive.css">
@@ -14,11 +14,11 @@
 <script type="text/javascript">
 	function setPlaceHolders()
 	{
-		var placeholders = ["Source","XXXX","Destination","XXXX"];
+		var placeholders = ["XXXXX"];
 		var elements = document.getElementsByTagName("input");
 		for (var i=0; i<elements.length; i++) 
 		{
-			//elements[i].setAttribute("required", "required");
+			elements[i].setAttribute("required", "required");
 			elements[i].setAttribute("placeholder", placeholders[i]);
 		}
 		
@@ -28,7 +28,7 @@
 <body onload="setPlaceHolders()">
  
 <f:view>
-<h:form id="Profile">
+<h:form id="search">
 <div id="main_container">
 
        
@@ -51,7 +51,7 @@
 	<div class="center_content_pages">
         	<div class="pages_banner" style="left: 5%; top: 20%">
             <center>
-            	<h:outputFormat value="Welcome #{login.username}"></h:outputFormat>
+            	<h:outputFormat value="Search Neighborhood"></h:outputFormat>
             </center>
             </div>
         	<div class="left_content"> 
@@ -72,49 +72,112 @@
 <div class="right_content">
               
                     <div class="form">
-					<h2>Select a service</h2>
-					
-					<h:selectOneMenu value="#{profile.serviceSelected}" valueChangeListener="#{profile.serviceRedirect}" onchange="this.form.submit();">
-						<f:selectItem itemValue="Select a service" value="Select a service" itemLabel="Select a service"/>
-						<f:selectItem itemValue="Send" value="Send" itemLabel="Send"/>
-						<f:selectItem itemValue="Receive" value="Receive" itemLabel="Receive"/>
+					<h:panelGrid columns="2" width="auto">
+						<h:outputLabel value="Enter Zip Code: "></h:outputLabel>
+						<h:inputText value="#{peopleNearBy.zip}" id="zip"></h:inputText>
+					<h:outputText value="Select search distance: "></h:outputText>
+					<h:selectOneMenu style="width:auto" valueChangeListener="#{peopleNearBy.selectedDistance}">
+						<f:selectItem itemValue="5" value="5" itemLabel="5"/>
+						<f:selectItem itemValue="10" value="10" itemLabel="10"/>
+						<f:selectItem itemValue="25" value="25" itemLabel="25"/>
+						<f:selectItem itemValue="50" value="50" itemLabel="50"/>
+						<f:selectItem itemValue="100" value="100" itemLabel="100"/>
 					</h:selectOneMenu>
-					
-				<h2> Tell us about your plans</h2>
-				<p> Where are you headed ?</p>
-				<h:panelGrid columns="4">
-					<h:outputLabel>From: </h:outputLabel>
-					<h:inputText id="source" value="#{profile.fromCity}"></h:inputText>
-					
-					<h:outputLabel>Zip: </h:outputLabel>
-					<h:inputText id="sourceZip" value="#{profile.fromZip}"></h:inputText>
-					
-					<h:outputLabel>To: </h:outputLabel>
-					<h:inputText id="destination" value="#{profile.destination}"></h:inputText>
-					
-					<h:outputLabel>Zip: </h:outputLabel>
-					<h:inputText id="destinationZip" value="#{profile.destination}"></h:inputText>
-				</h:panelGrid>
-				<h:panelGrid columns="4">
-					<h:outputLabel>When: </h:outputLabel>
-					<h:selectOneMenu style="width:auto">
-						<f:selectItems value="#{profile.dayValue}"/>
-					</h:selectOneMenu>
-					<h:selectOneMenu style="width:auto">
-						<f:selectItems value="#{profile.monthValue}"/>
-					</h:selectOneMenu>
-					<h:selectOneMenu style="width:auto">
-						<f:selectItems value="#{profile.yearValue}"/>
-					</h:selectOneMenu>
-				</h:panelGrid>
-				<h:panelGrid>
-					<h:commandButton value="Submit" styleClass="btn btn-inverse" style="width:auto; left:50%"></h:commandButton>
-				</h:panelGrid>	
-				
-					
-					
-                       
+					</h:panelGrid>
+					<h:panelGrid>
+						<h:commandButton action="#{peopleNearBy.searchNeighbors}" styleClass="btn btn-inverse"></h:commandButton>
+					</h:panelGrid>
 					</div>
+			</h:form>
+			<h:form>
+			
+			<div class = "form">
+			<h:dataTable value="#{peopleNearBy.user}" var="userDetails" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5">
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>First Name</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.fname}"></h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>Last Name</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.lname}"></h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>Street 1</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.street1}"></h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>Street 2</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.street2}"></h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>State</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.state}"></h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>City</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.city}"></h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>Zip</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.zip}"></h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>Distance from you</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.difference}"></h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputFormat>Mobile</h:outputFormat>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{userDetails.mobile}"></h:outputText>
+				</h:column>
+				
+			</h:dataTable>
+			
+			
+			</div>
             </div>
             
             

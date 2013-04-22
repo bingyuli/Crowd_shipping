@@ -95,7 +95,7 @@
 	</tr>
 	</table>
 		<div style="text-align: center">
-		<h:commandButton action="#{Signup.registerUser}" styleClass="btn btn-inverse" value="Signup"></h:commandButton>
+		<h:commandButton id="btnsignup" action="#{Signup.registerUser}" styleClass="btn btn-inverse" value="Signup"></h:commandButton>
 		</div>
 		<h:outputLabel id="error1" style="visibility: hidden"></h:outputLabel>
 		

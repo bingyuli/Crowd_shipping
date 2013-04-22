@@ -2,13 +2,17 @@ package jsf.example;
 
 import java.sql.*;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 public class Signup 
 {
-	private String url, user_address_query, user_details_query, login_query;
+	private String url, user_address_query, user_details_query, login_query, zips_query;
 	private Connection conn;
-	private PreparedStatement ud_pstmt, ua_pstmt, login;
+	private PreparedStatement ud_pstmt, ua_pstmt, login, zips;
 	private int ud_rs,ua_rs, user_login;
-	
+	private ResultSet rs;
+	private double latitude, longitude;
 	private String email, fname, lname, street1, street2, city, state, country, password, zip;
 	private Long mobile;
 	
@@ -110,8 +114,23 @@ public class Signup
 			conn = DriverManager.getConnection(url,"root","root");
 			
 			user_details_query = "insert into user_details values(?,?,?,?)";
-			user_address_query = "insert into user_address values(?,?,?,?,?,?,?)";
+			user_address_query = "insert into user_address values(?,?,?,?,?,?,?,?,?)";
 			login_query = "insert into login values (?,?)";
+			zips_query = "select latitude, longitude from zips where zip_code = ?";
+			
+			zips = conn.prepareStatement(zips_query);
+			zips.setInt(1, Integer.parseInt(zip));
+			rs = zips.executeQuery();
+			
+			if(rs.next())
+			{
+				this.latitude = rs.getDouble("LATITUDE");
+				this.longitude = rs.getLong("LONGITUDE");
+			}
+			else
+			{
+				FacesContext.getCurrentInstance().addMessage("Signup:btnsignup", new FacesMessage("Invalid Zip. Please enter a valid 5-digit zip code"));
+			}
 			
 			ud_pstmt = conn.prepareStatement(user_details_query);
 			ud_pstmt.setString(1, fname);
@@ -127,10 +146,14 @@ public class Signup
 			ua_pstmt.setString(5, state);
 			ua_pstmt.setString(6, country);
 			ua_pstmt.setInt(7, Integer.parseInt(zip));
+			ua_pstmt.setDouble(8, latitude);
+			ua_pstmt.setDouble(9, longitude);
 			
 			login = conn.prepareStatement(login_query);
 			login.setString(1, email);
 			login.setString(2, password);
+			
+			
 			
 			ud_rs = ud_pstmt.executeUpdate();
 			ua_rs = ua_pstmt.executeUpdate();
@@ -145,6 +168,21 @@ public class Signup
 		{
 			e.printStackTrace();
 			return "Failed";
+		}
+		finally
+		{
+			try 
+			{
+				conn.close();
+				ua_pstmt.close();
+				ud_pstmt.close();
+				
+			} catch (SQLException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}

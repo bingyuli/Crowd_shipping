@@ -47,7 +47,7 @@
                     <ul class="left_menu">
                         <li><h:commandLink action="#{profile.signout}" value="SignOut" ></h:commandLink></li>
                         <li><h:commandLink action="Notifications.jsp">Notifications <span class="badge badge-important">6</span></h:commandLink> </li>
-                        <li><a href="about.html" title="" >Locations</a></li>
+                        <li><h:commandLink action="Neighbors.jsp">Search Neighbors</h:commandLink></li>
                     </ul>
                 </div>
                 
