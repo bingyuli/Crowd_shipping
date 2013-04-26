@@ -20,6 +20,16 @@ public class peopleNearBy
 	private String zip;
 	private List<userDetails> userList;
 	private userDetails user;
+	
+	public List<userDetails> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<userDetails> userList) {
+		this.userList = userList;
+	}
+
+	
 	public userDetails getUser() {
 		return user;
 	}
@@ -41,7 +51,7 @@ public class peopleNearBy
 	public void searchNeighbors()
 	{
 		userList = new ArrayList<userDetails>();
-		user = new userDetails();
+		
 		
 		url = "jdbc:mysql://localhost:3306/crowd_shipping";
 		try
@@ -97,6 +107,7 @@ public class peopleNearBy
 			    
 			    while(rs1.next())
 			    {
+			    	user = new userDetails();
 			    	String email = rs1.getString("email");
 			    	System.out.println(email);
 			    	String query = "Select fname, lname, mobile from user_details where email = '"+ email +"' ";
