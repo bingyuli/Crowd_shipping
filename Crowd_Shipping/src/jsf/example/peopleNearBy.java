@@ -81,7 +81,8 @@ public class peopleNearBy
 		fetchUserDetails();
 		
 	}
-			
+	
+	
 		public void fetchUserDetails()
 		{
 			try
