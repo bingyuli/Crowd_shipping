@@ -12,10 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpSession;
-
+@ViewScoped
 public class Notifications 
 {
 	private String approveStatus;
@@ -31,6 +33,8 @@ public class Notifications
 	private double distance;
 	private userDetails user,mySendInfo;
 	private List<userDetails> userList, mySendList;
+	private int notificationCount = 0;
+	private HtmlDataTable dataTable;
 
 	
 	
@@ -45,7 +49,7 @@ public class Notifications
 
 	private List<Integer> nearByZips;
 	private nearbyRequests nreq;
-	private Package pkg, myPkgInfo;
+	private Package pkg, myPkgInfo, pkgRow = new Package();
 	private List<Package> packageList, myPkgList;
 	
 	public List<Package> getPackageList() {
@@ -94,7 +98,7 @@ public class Notifications
 		fetchSubInfo();
 		
 		//neighbor.searchNeighbors();
-		/*if(!Login.isLoggedIn)
+		if(!Login.isLoggedIn)
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
@@ -103,22 +107,18 @@ public class Notifications
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}*/
+		}
 	}
 
 	public void fetchReqUserInfo()
 	{
 		try
 		{
-//			Class.forName("com.mysql.jdbc.Driver");
-//			conn = DriverManager.getConnection(url,"root","root");
-			
 			String user_zip_query = "Select zip from user_address where email = ?";
 			String sender_ifo_query = "Select * from sender_info where zip = ?";
 			pstmt = conn.prepareStatement(user_zip_query);
 			pstmt.setString(1, username);
-//			pstmt.setString(2, password);
-//			
+			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next())
@@ -128,6 +128,7 @@ public class Notifications
 				user_zip = rs.getInt("zip");
 				nreq.searchNeighbors(user_zip, distance);
 				nearByZips = nreq.getNearByZips();
+				
 				
 				for (int j = 0; j < nearByZips.size(); j++) 
 				{
@@ -141,7 +142,7 @@ public class Notifications
 					{
 						pkg = new Package();
 						pkg.setId(zrs.getInt("id"));
-						this.pkg_id = zrs.getInt("id");
+						//this.pkg_id = zrs.getInt("id");
 						pkg.setPackageOwner(zrs.getString("email"));
 						this.user_email = zrs.getString("email");
 						pkg.setStreet1(zrs.getString("street1"));
@@ -155,9 +156,10 @@ public class Notifications
 						
 						packageList.add(pkg);
 					}
-					
+					notificationCount++;
 					
 				}
+//				notificationCount = packageList.size();
 				
 			}
 //		
@@ -166,6 +168,14 @@ public class Notifications
 		}
 
 		
+	}
+	
+	public void editDataItem()
+	{
+		pkgRow = (Package)dataTable.getRowData();
+		System.out.println("Getting row data");
+		System.out.println(pkgRow.getId());
+		this.pkg_id = pkgRow.getId();
 	}
 	
 	public void selectedDistance(ValueChangeEvent ve)
@@ -195,17 +205,30 @@ public class Notifications
 		this.rejectStatus = rejectStatus;
 	}
 	
+	public String redirectTo()
+	{
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("Notifications.jsp");
+//			return "Notifications";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "Notifications";
+	}
+	
 	public void approveRequest()
 	{
+		editDataItem();
 		
-		String approve_query = "update sender_info set status = 1, approved_email = ?  where email = ? and id = ?";
+		String approve_query = "update sender_info set status = 1, approved_email = ?  where id = ?";
 		
 		try 
 		{
 			PreparedStatement stmt = conn.prepareStatement(approve_query);
 			stmt.setString(1, username);
-			stmt.setString(2, user_email);
-			stmt.setInt(3, pkg_id);
+//			stmt.setString(2, user_email);
+			stmt.setInt(2, pkg_id);
 			int rowsAffected = stmt.executeUpdate();
 			if(rowsAffected > 0)
 			{
@@ -280,7 +303,7 @@ public class Notifications
 					myPkgInfo.setStatus("Pending");
 				
 				myPkgList.add(myPkgInfo);
-				
+				notificationCount++;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -341,5 +364,29 @@ public class Notifications
 
 	public void setMyPkgList(List<Package> myPkgList) {
 		this.myPkgList = myPkgList;
+	}
+
+	public int getNotificationCount() {
+		return notificationCount;
+	}
+
+	public void setNotificationCount(int notificationCount) {
+		this.notificationCount = notificationCount;
+	}
+
+	public HtmlDataTable getDataTable() {
+		return dataTable;
+	}
+
+	public void setDataTable(HtmlDataTable dataTable) {
+		this.dataTable = dataTable;
+	}
+
+	public Package getPkgRow() {
+		return pkgRow;
+	}
+
+	public void setPkgRow(Package pkgRow) {
+		this.pkgRow = pkgRow;
 	}
 }

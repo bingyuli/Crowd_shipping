@@ -59,110 +59,149 @@
 <div class="right_content_modified">
               
                     <div class="form">
+                    <h:panelGrid columns="2">
+                    <h:outputText value="Select search distance: "></h:outputText>
+					<h:selectOneMenu style="width:auto" valueChangeListener="#{notifications.selectedDistance}" onchange="this.form.submit();" >
+						<f:selectItem itemValue="Select a distance" value="Select distance" itemLabel="Select Distance"/>
+						<f:selectItem itemValue="5" value="5" itemLabel="5"/>
+						<f:selectItem itemValue="10" value="10" itemLabel="10"/>
+						<f:selectItem itemValue="25" value="25" itemLabel="25"/>
+						<f:selectItem itemValue="50" value="50" itemLabel="50"/>
+						<f:selectItem itemValue="100" value="100" itemLabel="100"/>
+					</h:selectOneMenu>
+                    </h:panelGrid>
+                    
 					<h2>Requests for you</h2>
 					
-					<h:dataTable id="dynamicTable" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5">
+					<h:dataTable id="dynamicTable" border="2" binding="#{notifications.dataTable }" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5" value="#{notifications.packageList}" var="pkgDetails" >
 						<h:column> 
 							<f:facet name="header">
-								<h:outputLabel value="#"></h:outputLabel>
+								<h:outputLabel value="Street1" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{pkgDetails.street1}"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="First Name"></h:outputLabel>
+								<h:outputLabel value="Street2" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{pkgDetails.street2}"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Last Name"></h:outputLabel>
+								<h:outputLabel value="City" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{pkgDetails.city}"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Package Source"></h:outputLabel>
+								<h:outputLabel value="State" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{pkgDetails.state}"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Package Destination"></h:outputLabel>
+								<h:outputLabel value="Zip" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{pkgDetails.zip }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Package Type"></h:outputLabel>
+								<h:outputLabel value="Package Type" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{pkgDetails.pkgType }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Delivery Date"></h:outputLabel>
+								<h:outputLabel value="Delivery Date" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{pkgDetails.date }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Contact"></h:outputLabel>
+								<h:outputLabel value="Comment" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{pkgDetails.comment }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Status"></h:outputLabel>
+							<h:column>
+								<h:outputLabel value="Action" style="font-weight:bold"></h:outputLabel>
+							</h:column>
 							</f:facet>
-							<h:outputText value="Hello"></h:outputText>
+							<h:panelGrid columns="4">
+								<h:commandLink value="Approve" action="#{notifications.approveRequest}" id="approve">
+									<f:setPropertyActionListener value="#{packageList}" target="#{notifications.packageList }"/>
+								</h:commandLink>
+								
+							</h:panelGrid>	
 						</h:column>
+						
 						
 					</h:dataTable>
 					
 					
 				<h2> Your Submitted Requests</h2>
-				<h:dataTable id="dynamicTableReq" styleClass="table table-hover" rules="all">
+				<h:dataTable id="dynamicTableReq" border="2" styleClass="table table-hover" rules="all" value="#{notifications.myPkgList }" var="myPkgDetails">
 						<h:column> 
 							<f:facet name="header">
-								<h:outputLabel value="#"></h:outputLabel>
+								<h:outputLabel value="Street 1" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{myPkgDetails.street1}"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Package Source"></h:outputLabel>
+								<h:outputLabel value="Street 2" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{myPkgDetails.street2 }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Package Destination"></h:outputLabel>
+								<h:outputLabel value="City" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{myPkgDetails.city }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Package Type"></h:outputLabel>
+								<h:outputLabel value="State" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{myPkgDetails.state }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Delivery Date"></h:outputLabel>
+								<h:outputLabel value="City" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{myPkgDetails.city }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Contact"></h:outputLabel>
+								<h:outputLabel value="Zip" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{myPkgDetails.zip }"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputLabel value="Status"></h:outputLabel>
+								<h:outputLabel value="Package Type" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value=""></h:outputText>
+							<h:outputText value="#{myPkgDetails.pkgType }"></h:outputText>
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputLabel value="Delivery Date" style="font-weight:bold"></h:outputLabel>
+							</f:facet>
+							<h:outputText value="#{myPkgDetails.date }"></h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputLabel value="Comment" style="font-weight:bold"></h:outputLabel>
+							</f:facet>
+							<h:outputText value="#{myPkgDetails.comment }"></h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputLabel value="Status" style="font-weight:bold"></h:outputLabel>
+							</f:facet>
+							<h:outputText value="#{myPkgDetails.status }"></h:outputText>
 						</h:column>
 						
 					</h:dataTable>

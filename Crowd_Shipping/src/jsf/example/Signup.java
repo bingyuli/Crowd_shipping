@@ -3,8 +3,10 @@ package jsf.example;
 import java.sql.*;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+@ViewScoped
 public class Signup 
 {
 	private String url, user_address_query, user_details_query, login_query, zips_query;

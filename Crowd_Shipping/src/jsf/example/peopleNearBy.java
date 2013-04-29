@@ -7,9 +7,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIForm;
 import javax.faces.event.ValueChangeEvent;
 
+@ViewScoped
 public class peopleNearBy 
 {
 	private String url, address_query;

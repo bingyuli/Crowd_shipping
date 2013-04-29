@@ -116,7 +116,8 @@
 					</h:dataTable>
 					
 					<h:panelGrid columns="1">
-						<h:commandLink action="Notifications.jsp">Go Back</h:commandLink>
+						 <h:commandLink action="Notifications.jsp">Go Back</h:commandLink>
+						<%-- <h:commandLink action="#{notifications.redirectTo}">Go Back</h:commandLink> --%>
 					</h:panelGrid>
 				       
 					</div>

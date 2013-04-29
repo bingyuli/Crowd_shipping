@@ -3,9 +3,11 @@ package jsf.example;
 import java.sql.*;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.facelets.FaceletContext;
 
+@ViewScoped
 public class Login {
 
 	private String url, loginquery, userquery;

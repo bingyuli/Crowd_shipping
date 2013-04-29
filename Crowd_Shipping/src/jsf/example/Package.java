@@ -1,5 +1,8 @@
 package jsf.example;
 
+import javax.faces.bean.ViewScoped;
+
+@ViewScoped
 public class Package 
 {
 	private String packageOwner;

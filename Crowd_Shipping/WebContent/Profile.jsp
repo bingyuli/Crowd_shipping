@@ -1,3 +1,4 @@
+<%@page import="jsf.example.Notifications"%>
 <%@page import="jsf.example.Login"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
@@ -10,6 +11,8 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/adaria/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap-responsive.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/jquery.pnotify.default.css">
+
 </head>
 <script type="text/javascript">
 	function setPlaceHolders()
@@ -22,9 +25,13 @@
 			elements[i].setAttribute("placeholder", placeholders[i]);
 		}
 		
+		
 	}
 </script>
-
+<script type="text/javascript" src="<%=request.getContextPath()%>/CSS/jquery.pnotify.min.js"></script>
+<script>
+	
+</script>
 <body onload="setPlaceHolders()">
  
 <f:view>
