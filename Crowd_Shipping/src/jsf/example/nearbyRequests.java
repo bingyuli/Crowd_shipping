@@ -96,15 +96,15 @@ public class nearbyRequests
             double lonE = Math.toDegrees(Math.toRadians(userLongitude) + Math.atan2(Math.sin(Math.toRadians(90.0)) * Math.sin(distance / earthRadius) * Math.cos(Math.toRadians(userLatitude)), Math.cos(distance / earthRadius) - Math.sin(Math.toRadians(userLatitude)) * Math.sin(Math.toRadians(latN))));
             double lonW = Math.toDegrees(Math.toRadians(userLongitude) + Math.atan2(Math.sin(Math.toRadians(270.0)) * Math.sin(distance / earthRadius) * Math.cos(Math.toRadians(userLatitude)), Math.cos(distance / earthRadius) - Math.sin(Math.toRadians(userLatitude)) * Math.sin(Math.toRadians(latN))));
 			
-		    String searchquery = "select zip_code from zips where (latitude <= ?  AND latitude >= ? ) AND (longitude <= ? AND longitude >= ? ) AND (latitude != ? AND longitude != ?) AND city != ''";
+		    String searchquery = "select zip_code from zips where (latitude <= ?  AND latitude >= ? ) AND (longitude <= ? AND longitude >= ? ) AND city != ''";
 		    System.out.println("select * from zips where (latitude <=" + latN + "  AND latitude >=" + latS + " AND longitude <=" + lonE +  " AND longitude >=" + lonW + ") AND (latitude !=" + userLatitude + " AND longitude !=" + userLongitude + ") AND city != ''"); 
 		    PreparedStatement stmt1 = conn.prepareStatement(searchquery);
 		    stmt1.setDouble(1, latN);
 		    stmt1.setDouble(2, latS);
 		    stmt1.setDouble(3, lonE);
 		    stmt1.setDouble(4, lonW);
-		    stmt1.setDouble(5, userLatitude);
-		    stmt1.setDouble(6, userLongitude);
+		    /*stmt1.setDouble(5, userLatitude);
+		    stmt1.setDouble(6, userLongitude);*/
 		    
 		    
 		    ResultSet rs1 = stmt1.executeQuery();

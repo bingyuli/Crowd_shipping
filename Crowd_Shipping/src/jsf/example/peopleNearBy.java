@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.*;
 
 import javax.faces.component.UIForm;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpSession;
 
 public class peopleNearBy 
 {
@@ -20,6 +22,7 @@ public class peopleNearBy
 	private String zip;
 	private List<userDetails> userList;
 	private userDetails user;
+	private String username;
 	
 	public List<userDetails> getUserList() {
 		return userList;
@@ -51,7 +54,7 @@ public class peopleNearBy
 	public void searchNeighbors()
 	{
 		userList = new ArrayList<userDetails>();
-		
+		username = String.valueOf(((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getAttribute("username"));
 		
 		url = "jdbc:mysql://localhost:3306/crowd_shipping";
 		try
@@ -78,12 +81,12 @@ public class peopleNearBy
 		{
 			//throw new Exception(e.getMessage());
 		}
-		fetchUserDetails();
+		fetchUserDetails(username);
 		
 	}
 	
 	
-		public void fetchUserDetails()
+		public void fetchUserDetails(String username)
 		{
 			try
 			{
@@ -92,15 +95,16 @@ public class peopleNearBy
                 double lonE = Math.toDegrees(Math.toRadians(userLongitude) + Math.atan2(Math.sin(Math.toRadians(90.0)) * Math.sin(distance / earthRadius) * Math.cos(Math.toRadians(userLatitude)), Math.cos(distance / earthRadius) - Math.sin(Math.toRadians(userLatitude)) * Math.sin(Math.toRadians(latN))));
                 double lonW = Math.toDegrees(Math.toRadians(userLongitude) + Math.atan2(Math.sin(Math.toRadians(270.0)) * Math.sin(distance / earthRadius) * Math.cos(Math.toRadians(userLatitude)), Math.cos(distance / earthRadius) - Math.sin(Math.toRadians(userLatitude)) * Math.sin(Math.toRadians(latN))));
 				
-			    String searchquery = "select * from user_address where (latitude <= ?  AND latitude >= ? ) AND (longitude <= ? AND longitude >= ? ) AND (latitude != ? AND longitude != ?) AND city != ''";
+			    String searchquery = "select * from user_address where (latitude <= ?  AND latitude >= ? ) AND (longitude <= ? AND longitude >= ? ) AND email != ? AND city != ''";
 			    System.out.println("select * from user_address where (latitude <=" + latN + "  AND latitude >=" + latS + " AND longitude <=" + lonE +  " AND longitude >=" + lonW + ") AND (latitude !=" + userLatitude + " AND longitude !=" + userLongitude + ") AND city != ''"); 
 			    PreparedStatement stmt1 = conn.prepareStatement(searchquery);
 			    stmt1.setDouble(1, latN);
 			    stmt1.setDouble(2, latS);
 			    stmt1.setDouble(3, lonE);
 			    stmt1.setDouble(4, lonW);
-			    stmt1.setDouble(5, userLatitude);
-			    stmt1.setDouble(6, userLongitude);
+			    stmt1.setString(5, username);
+			    /*stmt1.setDouble(5, userLatitude);
+			    stmt1.setDouble(6, userLongitude);*/
 			    
 			    
 			    ResultSet rs1 = stmt1.executeQuery();
@@ -153,5 +157,13 @@ public class peopleNearBy
 
 	public void setTableForm(UIForm tableForm) {
 		this.tableForm = tableForm;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

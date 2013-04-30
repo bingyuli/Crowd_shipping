@@ -92,11 +92,11 @@
 			<h:form>
 			
 			<div class = "form">
-			<h:dataTable value="#{peopleNearBy.userList}" var="userDetails" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5">
+			<h:dataTable value="#{peopleNearBy.userList}" border="2" var="userDetails" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5">
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>First Name</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">First Name</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.fname}"></h:outputText>
@@ -105,7 +105,7 @@
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>Last Name</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">Last Name</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.lname}"></h:outputText>
@@ -114,7 +114,7 @@
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>Street 1</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">Street 1</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.street1}"></h:outputText>
@@ -123,7 +123,7 @@
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>Street 2</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">Street 2</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.street2}"></h:outputText>
@@ -132,7 +132,7 @@
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>State</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">State</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.state}"></h:outputText>
@@ -141,7 +141,7 @@
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>City</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">City</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.city}"></h:outputText>
@@ -150,7 +150,7 @@
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>Zip</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">Zip</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.zip}"></h:outputText>
@@ -159,7 +159,7 @@
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>Distance from you</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">Distance from you</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.difference}"></h:outputText>
@@ -168,7 +168,7 @@
 				<h:column>
 					<f:facet name="header">
 						<h:column>
-							<h:outputFormat>Mobile</h:outputFormat>
+							<h:outputFormat style="font-weight: bold">Mobile</h:outputFormat>
 						</h:column>
 					</f:facet>
 					<h:outputText value="#{userDetails.mobile}"></h:outputText>

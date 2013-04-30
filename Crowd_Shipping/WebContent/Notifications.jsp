@@ -62,7 +62,7 @@
                     <h:panelGrid columns="2">
                     <h:outputText value="Select search distance: "></h:outputText>
 					<h:selectOneMenu style="width:auto" valueChangeListener="#{notifications.selectedDistance}" onchange="this.form.submit();" >
-						<f:selectItem itemValue="Select a distance" value="Select distance" itemLabel="Select Distance"/>
+						<f:selectItem itemValue="Select a distance" itemLabel="Select Distance"/>
 						<f:selectItem itemValue="5" itemLabel="5"/>
 						<f:selectItem itemValue="10" itemLabel="10"/>
 						<f:selectItem itemValue="25" itemLabel="25"/>
@@ -141,7 +141,7 @@
 					
 					
 				<h2> Your Submitted Requests</h2>
-				<h:dataTable id="dynamicTableReq" border="2" styleClass="table table-hover" rules="all" value="#{notifications.myPkgList }" var="myPkgDetails">
+				<h:dataTable id="dynamicTableReq" border="2" styleClass="table table-hover" rules="all" dir="ltr" value="#{notifications.myPkgList }" var="myPkgDetails">
 						<h:column> 
 							<f:facet name="header">
 								<h:outputLabel value="Street 1" style="font-weight:bold"></h:outputLabel>

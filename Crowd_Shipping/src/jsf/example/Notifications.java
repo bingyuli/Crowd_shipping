@@ -123,8 +123,8 @@ public class Notifications
 		try
 		{
 			String user_zip_query = "Select zip from user_address where email = ?";
-			String sender_ifo_query = "Select * from sender_info where zip = ? and status = 0";
-			String receive_info_query = "Select * from receive_package where zip = ? and status = 0";
+			String sender_ifo_query = "Select * from sender_info where zip = ? and status = 0 and email != ?";
+			String receive_info_query = "Select * from receive_package where zip = ? and status = 0 and email!= ?";
 			pstmt = conn.prepareStatement(user_zip_query);
 			pstmt.setString(1, username);
 
@@ -144,6 +144,7 @@ public class Notifications
 //					System.out.println("inside for");
 					zstmt = conn.prepareStatement(sender_ifo_query);
 					zstmt.setInt(1, nearByZips.get(j));
+					zstmt.setString(2, username);
 
 					zrs = zstmt.executeQuery();
 
@@ -170,6 +171,7 @@ public class Notifications
 					
 					rstmt = conn.prepareStatement(receive_info_query);
 					rstmt.setInt(1, nearByZips.get(j));
+					rstmt.setString(2, username);
 					
 					urs1 = rstmt.executeQuery();
 					setUrs1(urs1);
