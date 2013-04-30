@@ -128,7 +128,7 @@
 								<h:outputLabel value="Action" style="font-weight:bold"></h:outputLabel>
 							</h:column>
 							</f:facet>
-							<h:panelGrid columns="4">
+							<h:panelGrid columns="2">
 								<h:commandLink value="Approve" action="#{notifications.approveRequest}" id="approve">
 									<f:setPropertyActionListener value="#{packageList}" target="#{notifications.packageList }"/>
 								</h:commandLink>
@@ -141,7 +141,7 @@
 					
 					
 				<h2> Your Submitted Requests</h2>
-				<h:dataTable id="dynamicTableReq" border="2" styleClass="table table-hover" rules="all" dir="ltr" value="#{notifications.myPkgList }" var="myPkgDetails">
+				<h:dataTable id="dynamicTableReq" border="2" binding="#{notifications.dataTable1 }" styleClass="table table-hover" rules="all" dir="ltr" value="#{notifications.myPkgList }" var="myPkgDetails">
 						<h:column> 
 							<f:facet name="header">
 								<h:outputLabel value="Street 1" style="font-weight:bold"></h:outputLabel>
@@ -201,7 +201,13 @@
 							<f:facet name="header">
 								<h:outputLabel value="Status" style="font-weight:bold"></h:outputLabel>
 							</f:facet>
-							<h:outputText value="#{myPkgDetails.status }"></h:outputText>
+							<%-- <h:outputText value="#{myPkgDetails.status }"></h:outputText> --%>
+								<h:panelGrid columns="2">
+								<h:commandLink value="#{myPkgDetails.status }" action="#{notifications.approvedRequest}" id="status">
+									<f:setPropertyActionListener value="#{packageList}" target="#{notifications.packageList }"/>
+								</h:commandLink>
+								
+							</h:panelGrid>
 						</h:column>
 						
 					</h:dataTable>

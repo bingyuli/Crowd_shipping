@@ -2,7 +2,7 @@ package jsf.example;
 
 public class Package 
 {
-	private String packageOwner, packageDirection;
+	private String packageOwner, packageDirection, packageApprover;
 	private String street1 , street2, city, state, comment, pkgType;
 	private int zip, id;
 	private String date, status;
@@ -78,6 +78,12 @@ public class Package
 	}
 	public void setPackageDirection(String packageDirection) {
 		this.packageDirection = packageDirection;
+	}
+	public String getPackageApprover() {
+		return packageApprover;
+	}
+	public void setPackageApprover(String packageApprover) {
+		this.packageApprover = packageApprover;
 	}
 	
 	

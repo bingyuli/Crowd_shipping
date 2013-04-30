@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class Notifications 
 {
 	private String approveStatus, packageDirection, approve_query;
-	private String rejectStatus = "Reject";
+	private String packageApprover;
 	private peopleNearBy neighbor;
 	private String username, user_email;
 	private PreparedStatement pstmt, zstmt, rstmt, rstmt1;
@@ -41,7 +41,7 @@ public class Notifications
 	private userDetails user,mySendInfo;
 	private List<userDetails> userList, mySendList;
 	private int notificationCount = 0;
-	private HtmlDataTable dataTable;
+	private HtmlDataTable dataTable, dataTable1;
 
 
 
@@ -165,7 +165,7 @@ public class Notifications
 						pkg.setPkgType(zrs.getString("pkgdt"));
 						pkg.setDate(zrs.getDate("date").toString());
 						pkg.setComment(zrs.getString("comment"));
-
+						
 						packageList.add(pkg);
 					}
 					
@@ -230,6 +230,19 @@ public class Notifications
 		System.out.println(pkgRow.getId());
 		this.pkg_id = pkgRow.getId();
 		this.packageDirection = pkgRow.getPackageDirection();
+		this.approveStatus = pkgRow.getStatus();
+		this.packageApprover = pkgRow.getPackageApprover();
+	}
+	
+	public void editDataItem2()
+	{
+		pkgRow = (Package)dataTable1.getRowData();
+		System.out.println("Getting row data");
+		System.out.println(pkgRow.getId());
+		this.pkg_id = pkgRow.getId();
+		this.packageDirection = pkgRow.getPackageDirection();
+		this.approveStatus = pkgRow.getStatus();
+		this.packageApprover = pkgRow.getPackageApprover();
 	}
 
 	public void selectedDistance(ValueChangeEvent ve)
@@ -251,15 +264,7 @@ public class Notifications
 	}
 
 
-	public String getRejectStatus() {
-		return rejectStatus;
-	}
-
-
-	public void setRejectStatus(String rejectStatus) {
-		this.rejectStatus = rejectStatus;
-	}
-
+	
 	public String redirectTo()
 	{
 		try {
@@ -280,6 +285,7 @@ public class Notifications
 			approve_query = "update sender_info set status = 1, approved_email = ?  where id = ?";
 		else
 			approve_query = "update receive_package set status = 1, approved_email = ?  where id = ?";
+		
 		try 
 		{
 			PreparedStatement stmt = conn.prepareStatement(approve_query);
@@ -344,9 +350,62 @@ public class Notifications
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
+
+	public void approvedRequest()
+	{
+		editDataItem2();
+		if(this.approveStatus != null)
+		{
+			if(this.approveStatus == "Pending")
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("Notifications.jsp#");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			else
+			{
+				try{
+				userList.clear();
+			String user_details_query = "Select * from user_address where email = ?";
+			PreparedStatement pstmt = conn.prepareStatement(user_details_query);
+			pstmt.setString(1, packageApprover);
+			urs = pstmt.executeQuery();
+
+			while(urs.next())
+			{
+				user = new userDetails();
+		    	String email = urs.getString("email");
+		    	System.out.println(email);
+		    	String query = "Select fname, lname, mobile from user_details where email = '"+ packageApprover +"' ";
+		    	Statement stmt1 = conn.createStatement();
+		    	ResultSet rs2 = stmt1.executeQuery(query);
+		    	rs2.next();
+		    	user.setFname(rs2.getString("fname"));
+		    	user.setLname(rs2.getString("lname"));
+		    	user.setMobile(rs2.getLong("mobile"));
+		    	user.setStreet1(urs.getString("street1"));
+	    		user.setStreet2(urs.getString("street2"));
+	    		user.setCity(urs.getString("city"));
+	    		user.setState(urs.getString("state"));
+	    		user.setCountry(urs.getString("country"));
+	    		user.setZip(urs.getInt("zip"));
+	    		userList.add(user);
+		    	
+			}
+			FacesContext.getCurrentInstance().getExternalContext().redirect("Approve.jsp");
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			}
+
+				
+		}
+	}
+	
 
 	public void fetchSubInfo()
 	{
@@ -371,6 +430,7 @@ public class Notifications
 				myPkgInfo.setPkgType(rs.getString("pkgdt"));
 				myPkgInfo.setDate(rs.getDate("date").toString());
 				myPkgInfo.setComment(rs.getString("comment"));
+				myPkgInfo.setPackageApprover(rs.getString("approved_email"));
 				int status = rs.getInt("status");
 				if(status == 1)
 					myPkgInfo.setStatus("Approved");
@@ -471,5 +531,13 @@ public class Notifications
 
 	public void setPackageDirection(String packageDirection) {
 		this.packageDirection = packageDirection;
+	}
+
+	public HtmlDataTable getDataTable1() {
+		return dataTable1;
+	}
+
+	public void setDataTable1(HtmlDataTable dataTable1) {
+		this.dataTable1 = dataTable1;
 	}
 }
