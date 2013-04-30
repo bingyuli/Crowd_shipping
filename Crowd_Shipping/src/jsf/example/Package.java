@@ -1,11 +1,8 @@
 package jsf.example;
 
-import javax.faces.bean.ViewScoped;
-
-@ViewScoped
 public class Package 
 {
-	private String packageOwner;
+	private String packageOwner, packageDirection;
 	private String street1 , street2, city, state, comment, pkgType;
 	private int zip, id;
 	private String date, status;
@@ -75,6 +72,12 @@ public class Package
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getPackageDirection() {
+		return packageDirection;
+	}
+	public void setPackageDirection(String packageDirection) {
+		this.packageDirection = packageDirection;
 	}
 	
 	

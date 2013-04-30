@@ -63,17 +63,17 @@
                     <h:outputText value="Select search distance: "></h:outputText>
 					<h:selectOneMenu style="width:auto" valueChangeListener="#{notifications.selectedDistance}" onchange="this.form.submit();" >
 						<f:selectItem itemValue="Select a distance" value="Select distance" itemLabel="Select Distance"/>
-						<f:selectItem itemValue="5" value="5" itemLabel="5"/>
-						<f:selectItem itemValue="10" value="10" itemLabel="10"/>
-						<f:selectItem itemValue="25" value="25" itemLabel="25"/>
-						<f:selectItem itemValue="50" value="50" itemLabel="50"/>
-						<f:selectItem itemValue="100" value="100" itemLabel="100"/>
+						<f:selectItem itemValue="5" itemLabel="5"/>
+						<f:selectItem itemValue="10" itemLabel="10"/>
+						<f:selectItem itemValue="25" itemLabel="25"/>
+						<f:selectItem itemValue="50" itemLabel="50"/>
+						<f:selectItem itemValue="100" itemLabel="100"/>
 					</h:selectOneMenu>
                     </h:panelGrid>
                     
 					<h2>Requests for you</h2>
 					
-					<h:dataTable id="dynamicTable" border="2" binding="#{notifications.dataTable }" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5" value="#{notifications.packageList}" var="pkgDetails" >
+					<h:dataTable id="dynamicTable" binding="#{notifications.dataTable}" border="2" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5" value="#{notifications.packageList}" var="pkgDetails" >
 						<h:column> 
 							<f:facet name="header">
 								<h:outputLabel value="Street1" style="font-weight:bold"></h:outputLabel>

@@ -60,7 +60,7 @@
               
                     <div class="form">
                     
-					<h2>Request Person's Details</h2>
+					<h2>Package Details</h2>
 					
 					<h:dataTable id="dynamicTable" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5" value="#{notifications.userList}" var="userDetails" >
 						<h:column> 
@@ -116,8 +116,7 @@
 					</h:dataTable>
 					
 					<h:panelGrid columns="1">
-						 <h:commandLink action="Notifications.jsp">Go Back</h:commandLink>
-						<%-- <h:commandLink action="#{notifications.redirectTo}">Go Back</h:commandLink> --%>
+						<h:commandLink action="Notifications.jsp?faces-redirect=true">Go Back</h:commandLink>
 					</h:panelGrid>
 				       
 					</div>

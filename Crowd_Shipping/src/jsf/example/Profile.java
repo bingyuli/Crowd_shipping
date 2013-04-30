@@ -8,13 +8,11 @@ import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@ViewScoped
 public class Profile 
 {
 	private static String[] days = new String[30];
@@ -65,8 +63,7 @@ public class Profile
 				e.printStackTrace();
 			}
 		}
-//		Notifications n = new Notifications();
-//		n.fetchReqUserInfo();
+		
 		monthValue = new LinkedHashMap<String, Object>();
 		dayValue = new LinkedHashMap<String, Object>();
 		yearValue = new LinkedHashMap<String, Object>();

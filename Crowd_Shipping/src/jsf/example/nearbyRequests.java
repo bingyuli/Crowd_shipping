@@ -8,11 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIForm;
 import javax.faces.event.ValueChangeEvent;
 
-@ViewScoped
 public class nearbyRequests 
 {
 	private String url, address_query;
@@ -42,7 +40,7 @@ public class nearbyRequests
 		this.user = user;
 	}
 
-	private double distance = 5.0;
+	private double distance;
 	private double earthRadius = 3959.0;
 	private UIForm tableForm;
 

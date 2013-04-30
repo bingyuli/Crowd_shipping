@@ -20,14 +20,21 @@ import javax.servlet.http.HttpSession;
 @ViewScoped
 public class Notifications 
 {
-	private String approveStatus;
-	
-	
+	private String approveStatus, packageDirection, approve_query;
 	private String rejectStatus = "Reject";
 	private peopleNearBy neighbor;
 	private String username, user_email;
-	private PreparedStatement pstmt, zstmt;
-	private ResultSet rs, zrs, urs;
+	private PreparedStatement pstmt, zstmt, rstmt, rstmt1;
+	private ResultSet rs, zrs, urs, urs2;
+	private static ResultSet urs1, tempurs1;
+	public static ResultSet getUrs1() {
+		return urs1;
+	}
+
+	public static void setUrs1(ResultSet urs1) {
+		Notifications.urs1 = urs1;
+	}
+
 	private Connection conn;
 	private int user_zip, pkg_id;
 	private double distance;
@@ -36,9 +43,9 @@ public class Notifications
 	private int notificationCount = 0;
 	private HtmlDataTable dataTable;
 
-	
-	
-	
+
+
+
 	public int getUser_zip() {
 		return user_zip;
 	}
@@ -49,9 +56,9 @@ public class Notifications
 
 	private List<Integer> nearByZips;
 	private nearbyRequests nreq;
-	private Package pkg, myPkgInfo, pkgRow = new Package();
+	private Package pkg, myPkgInfo, pkgRow = new Package(), rcvPkgInfo = new Package();
 	private List<Package> packageList, myPkgList;
-	
+
 	public List<Package> getPackageList() {
 		return packageList;
 	}
@@ -68,7 +75,7 @@ public class Notifications
 		this.userList = userList;
 	}
 
-	
+
 //	public Notifications()
 	{
 		System.out.print("Constructor called");
@@ -77,11 +84,11 @@ public class Notifications
 		packageList = new ArrayList<Package>();
 		userList = new ArrayList<userDetails>();
 		myPkgList = new ArrayList<Package>();
-		
+
 		username = String.valueOf(((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getAttribute("username"));
 		String url = "jdbc:mysql://localhost:3306/crowd_shipping";
-		
-		
+
+
 		try 
 		{
 			Class.forName("com.mysql.jdbc.Driver");
@@ -93,10 +100,10 @@ public class Notifications
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 		fetchSubInfo();
-		
+
 		//neighbor.searchNeighbors();
 		if(!Login.isLoggedIn)
 		{
@@ -112,39 +119,43 @@ public class Notifications
 
 	public void fetchReqUserInfo()
 	{
+		packageList = new ArrayList<Package>();
 		try
 		{
 			String user_zip_query = "Select zip from user_address where email = ?";
-			String sender_ifo_query = "Select * from sender_info where zip = ?";
+			String sender_ifo_query = "Select * from sender_info where zip = ? and status = 0";
+			String receive_info_query = "Select * from receive_package where zip = ? and status = 0";
 			pstmt = conn.prepareStatement(user_zip_query);
 			pstmt.setString(1, username);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next())
+
+			while(rs.next())
 			{
-				
-				
+
+
 				user_zip = rs.getInt("zip");
 				nreq.searchNeighbors(user_zip, distance);
 				nearByZips = nreq.getNearByZips();
-				
-				
+
+
 				for (int j = 0; j < nearByZips.size(); j++) 
 				{
-					System.out.println("inside for");
+//					System.out.println("inside for");
 					zstmt = conn.prepareStatement(sender_ifo_query);
 					zstmt.setInt(1, nearByZips.get(j));
-					
+
 					zrs = zstmt.executeQuery();
-					
-					if(zrs.next())
+
+					while(zrs.next())
 					{
 						pkg = new Package();
 						pkg.setId(zrs.getInt("id"));
 						//this.pkg_id = zrs.getInt("id");
 						pkg.setPackageOwner(zrs.getString("email"));
+						pkg.setPackageDirection("Send");
 						this.user_email = zrs.getString("email");
+						System.out.println(user_email);
 						pkg.setStreet1(zrs.getString("street1"));
 						pkg.setStreet2(zrs.getString("street2"));
 						pkg.setCity(zrs.getString("city"));
@@ -153,40 +164,82 @@ public class Notifications
 						pkg.setPkgType(zrs.getString("pkgdt"));
 						pkg.setDate(zrs.getDate("date").toString());
 						pkg.setComment(zrs.getString("comment"));
-						
+
 						packageList.add(pkg);
 					}
-					notificationCount++;
 					
+					rstmt = conn.prepareStatement(receive_info_query);
+					rstmt.setInt(1, nearByZips.get(j));
+					
+					urs1 = rstmt.executeQuery();
+					setUrs1(urs1);
+					while(urs1.next())
+					{
+						
+						pkg = new Package();
+						pkg.setId(urs1.getInt("id"));
+						//this.pkg_id = zrs.getInt("id");
+						pkg.setPackageOwner(urs1.getString("email"));
+						
+						this.user_email = urs1.getString("email");
+						System.out.println(user_email);
+						pkg.setPackageDirection("Receive");
+						rstmt1 = conn.prepareStatement("Select * from user_address where email = '"+ user_email +"'");
+						urs2 = rstmt1.executeQuery();
+					    if(urs2.next())
+					    {
+					    	pkg.setStreet1(urs2.getString("street1"));
+					    	pkg.setStreet2(urs2.getString("street2"));
+					    	pkg.setCity(urs2.getString("city"));
+					    	pkg.setState(urs2.getString("state"));
+					    	pkg.setZip(urs2.getInt("zip"));
+					    }
+					    rcvPkgInfo.setStreet1(urs1.getString("street1"));
+					    rcvPkgInfo.setStreet2(urs1.getString("street2"));
+					    rcvPkgInfo.setCity(urs1.getString("city"));
+					    rcvPkgInfo.setState(urs1.getString("state"));
+					    rcvPkgInfo.setZip(urs1.getInt("zip"));
+						
+					    pkg.setPkgType(urs1.getString("package_size"));
+						pkg.setDate(urs1.getDate("date").toString());
+						pkg.setComment(urs1.getString("comment"));
+
+						packageList.add(pkg);
+					}
+					
+					notificationCount++;
+
 				}
 //				notificationCount = packageList.size();
-				
+
 			}
 //		
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		
+
 	}
-	
+
 	public void editDataItem()
 	{
 		pkgRow = (Package)dataTable.getRowData();
 		System.out.println("Getting row data");
 		System.out.println(pkgRow.getId());
 		this.pkg_id = pkgRow.getId();
+		this.packageDirection = pkgRow.getPackageDirection();
 	}
-	
+
 	public void selectedDistance(ValueChangeEvent ve)
 	{
 		this.distance = Double.parseDouble((String)ve.getNewValue());
-		packageList.clear();
+//		if(FacesContext.getCurrentInstance().isPostback())
+//			packageList.clear();
 		fetchReqUserInfo();
 		fetchSubInfo();
 		System.out.println(distance);
 	}
-	
+
 	public String getApproveStatus() {
 		return approveStatus;
 	}
@@ -204,7 +257,7 @@ public class Notifications
 	public void setRejectStatus(String rejectStatus) {
 		this.rejectStatus = rejectStatus;
 	}
-	
+
 	public String redirectTo()
 	{
 		try {
@@ -216,13 +269,15 @@ public class Notifications
 		}
 		return "Notifications";
 	}
-	
+
 	public void approveRequest()
 	{
 		editDataItem();
-		
-		String approve_query = "update sender_info set status = 1, approved_email = ?  where id = ?";
-		
+
+		if(this.packageDirection == "Send")
+			approve_query = "update sender_info set status = 1, approved_email = ?  where id = ?";
+		else
+			approve_query = "update receive_package set status = 1, approved_email = ?  where id = ?";
 		try 
 		{
 			PreparedStatement stmt = conn.prepareStatement(approve_query);
@@ -237,7 +292,7 @@ public class Notifications
 				PreparedStatement pstmt = conn.prepareStatement(user_details_query);
 				pstmt.setString(1, user_email);
 				urs = pstmt.executeQuery();
-				
+
 				while(urs.next())
 				{
 					user = new userDetails();
@@ -250,29 +305,47 @@ public class Notifications
 			    	user.setFname(rs2.getString("fname"));
 			    	user.setLname(rs2.getString("lname"));
 			    	user.setMobile(rs2.getLong("mobile"));
-			    	user.setStreet1(urs.getString(2));
-			    	user.setStreet2(urs.getString(3));
-			    	user.setCity(urs.getString(4));
-			    	user.setState(urs.getString(5));
-			    	user.setCountry(urs.getString(6));
-			    	user.setZip(urs.getInt(7));
-			    	
+			    	if(this.packageDirection == "Receive")
+			    	{
+			    		/*user.setStreet1(getUrs1().getString("street1"));
+			    		user.setStreet2(getUrs1().getString("street2"));
+			    		user.setCity(getUrs1().getString("city"));
+			    		user.setState(getUrs1().getString("state"));
+			    		user.setCountry(getUrs1().getString("country"));
+			    		user.setZip(getUrs1().getInt("zip"));*/
+			    		
+			    		user.setStreet1(rcvPkgInfo.getStreet1());
+			    		user.setStreet2(rcvPkgInfo.getStreet2());
+			    		user.setCity(rcvPkgInfo.getCity());
+			    		user.setState(rcvPkgInfo.getState());
+//			    		user.setCountry(getUrs1().getString("country"));
+			    		user.setZip(rcvPkgInfo.getZip());
+			    	}
+			    	else
+			    	{
+			    		user.setStreet1(urs.getString("street1"));
+			    		user.setStreet2(urs.getString("street2"));
+			    		user.setCity(urs.getString("city"));
+			    		user.setState(urs.getString("state"));
+			    		user.setCountry(urs.getString("country"));
+			    		user.setZip(urs.getInt("zip"));
+			    	}
 			    	userList.add(user);
 				}
-				
+
 			}
-			
+
 			FacesContext.getCurrentInstance().getExternalContext().redirect("Approve.jsp");
-			
+
 		} catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
+
 	public void fetchSubInfo()
 	{
 		myPkgList.clear();
@@ -281,13 +354,13 @@ public class Notifications
 		try {
 			pstmt = conn.prepareStatement(subInfo_query);
 			pstmt.setString(1, username);
-			
+
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			while(rs.next())
 			{
 				myPkgInfo = new Package();
-				
+
 				myPkgInfo.setStreet1(rs.getString("street1"));
 				myPkgInfo.setStreet2(rs.getString("street2"));
 				myPkgInfo.setCity(rs.getString("city"));
@@ -301,7 +374,7 @@ public class Notifications
 					myPkgInfo.setStatus("Approved");
 				else
 					myPkgInfo.setStatus("Pending");
-				
+
 				myPkgList.add(myPkgInfo);
 				notificationCount++;
 			}
@@ -309,13 +382,13 @@ public class Notifications
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}
-	
+
 	public void declineRequest()
 	{
-		
+
 	}
 
 	public double getDistance() {
@@ -388,5 +461,13 @@ public class Notifications
 
 	public void setPkgRow(Package pkgRow) {
 		this.pkgRow = pkgRow;
+	}
+
+	public String getPackageDirection() {
+		return packageDirection;
+	}
+
+	public void setPackageDirection(String packageDirection) {
+		this.packageDirection = packageDirection;
 	}
 }

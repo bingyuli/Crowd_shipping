@@ -3,10 +3,8 @@ package jsf.example;
 import java.sql.*;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-@ViewScoped
 public class Signup 
 {
 	private String url, user_address_query, user_details_query, login_query, zips_query;
@@ -162,7 +160,11 @@ public class Signup
 			user_login = login.executeUpdate();
 			
 			if(ud_rs > 0 && ua_rs > 0 && user_login > 0)
+			{
+				FacesContext.getCurrentInstance().getExternalContext().redirect("Login.jsp");
 				return "Success";
+			}
+				
 			else
 				return "Failed";
 		}

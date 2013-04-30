@@ -1,8 +1,5 @@
 package jsf.example;
 
-import javax.faces.bean.ViewScoped;
-
-@ViewScoped
 public class userDetails 
 {
 	private String fname, lname, email, street1, street2, city, state, country;

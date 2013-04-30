@@ -92,7 +92,7 @@
 			<h:form>
 			
 			<div class = "form">
-			<h:dataTable value="#{peopleNearBy.userList}" var="userDetails" border="2" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5">
+			<h:dataTable value="#{peopleNearBy.userList}" var="userDetails" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5">
 				<h:column>
 					<f:facet name="header">
 						<h:column>

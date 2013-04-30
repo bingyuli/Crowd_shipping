@@ -1,4 +1,3 @@
-<%@page import="jsf.example.Notifications"%>
 <%@page import="jsf.example.Login"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
@@ -11,8 +10,6 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/adaria/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap-responsive.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/jquery.pnotify.default.css">
-
 </head>
 <script type="text/javascript">
 	function setPlaceHolders()
@@ -28,10 +25,7 @@
 		
 	}
 </script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/CSS/jquery.pnotify.min.js"></script>
-<script>
-	
-</script>
+
 <body onload="setPlaceHolders()">
  
 <f:view>
@@ -67,8 +61,8 @@
                 <h2>Navigate</h2>
                     <ul class="left_menu">
                         <li><h:commandLink action="#{profile.signout}" value="SignOut" ></h:commandLink></li>
-                        <li><h:commandLink action="Notifications.jsp">Notifications <span class="badge badge-important">6</span></h:commandLink> </li>
-                        <li><h:commandLink action="Neighbors.jsp">Search Neighbors</h:commandLink></li>
+                        <li><h:commandLink action="Notifications.jsp?faces-redirect=true">Notifications <span class="badge badge-important">6</span></h:commandLink> </li>
+                        <li><h:commandLink action="Neighbors.jsp?faces-redirect=true">Search Neighbors</h:commandLink></li>
                     </ul>
                 </div>
                 
