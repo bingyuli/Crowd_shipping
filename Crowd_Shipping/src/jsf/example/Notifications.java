@@ -2,6 +2,7 @@ package jsf.example;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,11 +19,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpSession;
 @ViewScoped
-public class Notifications 
+
+public class Notifications implements Serializable
 {
 	private String approveStatus, packageDirection, approve_query;
-	private String packageApprover;
-	private peopleNearBy neighbor;
+	private String packageApprover, packageOwner;
+	private peopleNearBy neighbor, neighbor1;
 	private String username, user_email;
 	private PreparedStatement pstmt, zstmt, rstmt, rstmt1;
 	private ResultSet rs, zrs, urs, urs2;
@@ -36,13 +38,13 @@ public class Notifications
 	}
 
 	private Connection conn;
-	private int user_zip, pkg_id;
-	private double distance;
+	private int user_zip, pkg_id, appPkgID;
+	private double distance = 5.0;
 	private userDetails user,mySendInfo;
 	private List<userDetails> userList, mySendList;
 	private int notificationCount = 0;
 	private HtmlDataTable dataTable, dataTable1;
-
+	private Approve approve = new Approve();
 
 
 
@@ -56,7 +58,7 @@ public class Notifications
 
 	private List<Integer> nearByZips;
 	private nearbyRequests nreq;
-	private Package pkg, myPkgInfo, pkgRow = new Package(), rcvPkgInfo = new Package();
+	private Package pkg, myPkgInfo, myPkgInfo1, pkgRow = new Package(), rcvPkgInfo = new Package();
 	private List<Package> packageList, myPkgList;
 
 	public List<Package> getPackageList() {
@@ -76,10 +78,12 @@ public class Notifications
 	}
 
 
-//	public Notifications()
+	public Notifications()
 	{
+		if(!FacesContext.getCurrentInstance().isPostback()){
 		System.out.print("Constructor called");
 		neighbor = new peopleNearBy();
+		neighbor1 = new peopleNearBy();
 		nreq  = new nearbyRequests();
 		packageList = new ArrayList<Package>();
 		userList = new ArrayList<userDetails>();
@@ -103,6 +107,7 @@ public class Notifications
 
 
 		fetchSubInfo();
+		fetchReqUserInfo();
 
 		//neighbor.searchNeighbors();
 		if(!Login.isLoggedIn)
@@ -115,6 +120,7 @@ public class Notifications
 				e.printStackTrace();
 			}
 		}
+		}
 	}
 
 	public void fetchReqUserInfo()
@@ -123,8 +129,8 @@ public class Notifications
 		try
 		{
 			String user_zip_query = "Select zip from user_address where email = ?";
-			String sender_ifo_query = "Select * from sender_info where zip = ? and status = 0 and email != ?";
-			String receive_info_query = "Select * from receive_package where zip = ? and status = 0 and email!= ?";
+			String sender_ifo_query = "Select * from sender_info where zip = ? and status = 0 and email != ? and date >= CURDATE()";
+			String receive_info_query = "Select * from receive_package where zip = ? and status = 0 and email != ? and date >= CURDATE()";
 			pstmt = conn.prepareStatement(user_zip_query);
 			pstmt.setString(1, username);
 
@@ -154,8 +160,9 @@ public class Notifications
 						pkg.setId(zrs.getInt("id"));
 						//this.pkg_id = zrs.getInt("id");
 						pkg.setPackageOwner(zrs.getString("email"));
+						if(neighbor.searchNeighbors(zrs.getString("email"), username, this.distance)){
 						pkg.setPackageDirection("Send");
-						this.user_email = zrs.getString("email");
+//						this.user_email = zrs.getString("email");
 						System.out.println(user_email);
 						pkg.setStreet1(zrs.getString("street1"));
 						pkg.setStreet2(zrs.getString("street2"));
@@ -167,7 +174,7 @@ public class Notifications
 						pkg.setComment(zrs.getString("comment"));
 						
 						packageList.add(pkg);
-					}
+					}}
 					
 					rstmt = conn.prepareStatement(receive_info_query);
 					rstmt.setInt(1, nearByZips.get(j));
@@ -209,7 +216,7 @@ public class Notifications
 						packageList.add(pkg);
 					}
 					
-					notificationCount++;
+					
 
 				}
 //				notificationCount = packageList.size();
@@ -231,7 +238,8 @@ public class Notifications
 		this.pkg_id = pkgRow.getId();
 		this.packageDirection = pkgRow.getPackageDirection();
 		this.approveStatus = pkgRow.getStatus();
-		this.packageApprover = pkgRow.getPackageApprover();
+		this.packageOwner = pkgRow.getPackageOwner();
+//		this.packageApprover = pkgRow.getPackageApprover();
 	}
 	
 	public void editDataItem2()
@@ -239,7 +247,7 @@ public class Notifications
 		pkgRow = (Package)dataTable1.getRowData();
 		System.out.println("Getting row data");
 		System.out.println(pkgRow.getId());
-		this.pkg_id = pkgRow.getId();
+		this.appPkgID = pkgRow.getId();
 		this.packageDirection = pkgRow.getPackageDirection();
 		this.approveStatus = pkgRow.getStatus();
 		this.packageApprover = pkgRow.getPackageApprover();
@@ -247,7 +255,13 @@ public class Notifications
 
 	public void selectedDistance(ValueChangeEvent ve)
 	{
-		this.distance = Double.parseDouble((String)ve.getNewValue());
+		System.out.println("Value changed");
+		String newValue = (String)ve.getNewValue();
+		System.out.println("New Value: "+ newValue);
+		if(newValue.equals("Select a distance"))
+			this.distance = 5.0;
+		else
+			this.distance = Double.parseDouble((String)ve.getNewValue());
 //		if(FacesContext.getCurrentInstance().isPostback())
 //			packageList.clear();
 		fetchReqUserInfo();
@@ -263,7 +277,10 @@ public class Notifications
 		this.approveStatus = approveStatus;
 	}
 
-
+//	public boolean checkUserWithinRange(String email)
+//	{
+//		String query = ""
+//	}
 	
 	public String redirectTo()
 	{
@@ -280,6 +297,8 @@ public class Notifications
 	public void approveRequest()
 	{
 		editDataItem();
+		
+//		approve.approveRequest(this.packageDirection, this.pkg_id, this.packageOwner);
 
 		if(this.packageDirection == "Send")
 			approve_query = "update sender_info set status = 1, approved_email = ?  where id = ?";
@@ -298,7 +317,7 @@ public class Notifications
 				userList.clear();
 				String user_details_query = "Select * from user_address where email = ?";
 				PreparedStatement pstmt = conn.prepareStatement(user_details_query);
-				pstmt.setString(1, user_email);
+				pstmt.setString(1, packageOwner);
 				urs = pstmt.executeQuery();
 
 				while(urs.next())
@@ -411,6 +430,7 @@ public class Notifications
 	{
 		myPkgList.clear();
 		String subInfo_query = "Select * from sender_info where email = ?";
+		String receiveQuery = "select * from receive_package where email = ?";
 		PreparedStatement pstmt;
 		try {
 			pstmt = conn.prepareStatement(subInfo_query);
@@ -433,13 +453,50 @@ public class Notifications
 				myPkgInfo.setPackageApprover(rs.getString("approved_email"));
 				int status = rs.getInt("status");
 				if(status == 1)
+				{
 					myPkgInfo.setStatus("Approved");
+					notificationCount++;
+				}
 				else
 					myPkgInfo.setStatus("Pending");
 
 				myPkgList.add(myPkgInfo);
-				notificationCount++;
+				
 			}
+			
+			
+			PreparedStatement pstmt1 = conn.prepareStatement(receiveQuery);
+			pstmt1.setString(1, username);
+
+			ResultSet rs11 = pstmt1.executeQuery();
+
+			while(rs11.next())
+			{
+				myPkgInfo = new Package();
+				System.out.println("Inside Receive");
+				myPkgInfo.setStreet1(rs11.getString("street1"));
+				myPkgInfo.setStreet2(rs11.getString("street2"));
+				myPkgInfo.setCity(rs11.getString("city"));
+				myPkgInfo.setState(rs11.getString("state"));
+				myPkgInfo.setZip(rs11.getInt("zip"));
+				myPkgInfo.setPkgType(rs11.getString("package_size"));
+				myPkgInfo.setDate(rs11.getDate("date").toString());
+				myPkgInfo.setComment(rs11.getString("comment"));
+				myPkgInfo.setPackageApprover(rs11.getString("approved_email"));
+				int status = rs11.getInt("status");
+				if(status == 1)
+				{
+					myPkgInfo.setStatus("Approved");
+					notificationCount++;
+				}
+				else
+					myPkgInfo.setStatus("Pending");
+
+				myPkgList.add(myPkgInfo);
+				
+			}
+
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -539,5 +596,21 @@ public class Notifications
 
 	public void setDataTable1(HtmlDataTable dataTable1) {
 		this.dataTable1 = dataTable1;
+	}
+
+	public int getAppPkgID() {
+		return appPkgID;
+	}
+
+	public void setAppPkgID(int appPkgID) {
+		this.appPkgID = appPkgID;
+	}
+
+	public String getPackageOwner() {
+		return packageOwner;
+	}
+
+	public void setPackageOwner(String packageOwner) {
+		this.packageOwner = packageOwner;
 	}
 }

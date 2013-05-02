@@ -92,35 +92,16 @@ Cufon.replace('.pages_banner', { fontFamily: 'GeosansLight' });
         
     </div> -->
     
-    
-    <div class="dropdown">
-    	<a class="dropdown-toggle" href="#" id="signin-dropdown">
-    	Sign In
-    		<b class="caret"></b>
-    	</a>
-    	<ul class="dropdown-menu" id="signin-ul">
-    	<li><h:panelGrid columns="2" style="panel-layout:fixed">
-			<h:outputLabel id="email" styleClass="more">E-mail: </h:outputLabel>
-			<h:inputText id="uname" value="#{login.username}" required="true" requiredMessage="E-mail is required">
-			</h:inputText>
-				
-			<h:outputLabel styleClass="more">Password: </h:outputLabel>
-			<h:inputSecret id="pwd" value="#{login.password}" required="true" requiredMessage="Password is required"></h:inputSecret>
-			
-		</h:panelGrid></li>
-	<h:panelGrid >
-		<h:commandButton id="btnLogin" action="#{login.checkUser}" value="Login" styleClass="btn btn-inverse" style="left: 50%"></h:commandButton>
-	</h:panelGrid>
-    	</ul>
-    </div>
     <hr>
+    
+    
     <div class="jumbotron">
         <h1 align="center" >Crowd Shipping </h1>
              
              
-                <h2 align="center" style="font-family:arial;color:green;font-size:20px;" >By the people, for the people</h2>
-        <p class="lead" style="font-size:20px;" ><i> Our vision is to make life easier by providing shipping service by everyone to anyone around the world.</i></p>
-        <center><a class="btn btn-large btn-inverse" href="Signup.jsp">Sign up today</a></center>
+                <h2 align="center" style="font-family:arial;color:black;font-size:20px;" >Error</h2>
+        <p class="lead" style="font-size:20px;" ><i> There was a problem in processing your request please click on GO Back to continue.</i></p>
+        <center><a class="btn btn-large btn-inverse" href="Login.jsp?faces-redirect=true">Go Back</a></center>
       </div>
 	
 	</div>

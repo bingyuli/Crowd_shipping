@@ -1,6 +1,9 @@
 package jsf.example;
 
 import java.sql.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -34,6 +37,21 @@ public class Login {
 	{
 		return password;
 	}
+
+	public static String MD5(String md5) {
+        try {
+                MessageDigest md = MessageDigest.getInstance("SHA-1");
+                byte[] array = md.digest(md5.getBytes());
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < array.length; ++i) {
+                    sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+                }
+                return sb.toString();
+            } catch (NoSuchAlgorithmException e) {
+            
+        }
+        return null;
+    }
 	
 	public String checkUser()
 	{
@@ -47,7 +65,7 @@ public class Login {
 			userquery = "select fname from user_details where email = ?";
 			pstmt = conn.prepareStatement(loginquery);
 			pstmt.setString(1, username);
-			pstmt.setString(2, password);
+			pstmt.setString(2, MD5(password));
 			
 			rs = pstmt.executeQuery();
 			//System.out.println(rs.getString(1));

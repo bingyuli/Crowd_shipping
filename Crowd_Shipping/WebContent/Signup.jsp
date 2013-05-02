@@ -19,7 +19,9 @@
       
 	<div class="header">
 
-            <div class="logo"><a href="index.html">Crowd Shipping</a></div>
+            <div class="logo">
+            <img src="<%=request.getContextPath()%>/CSS/adaria/images/cs.jpg" width="70" height="70" alt="" title="" border="0" />
+            <a>Crowd Shipping</a></div>
             <div class="slogan">| Shipping for all</div> 
         
 			<div class="header_socials">

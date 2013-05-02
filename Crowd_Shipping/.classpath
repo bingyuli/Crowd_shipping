@@ -23,5 +23,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSF 2.0 (Apache Myfaces JSF Core-2.0 API 2.0.2)"/>
 	<classpathentry kind="lib" path="E:/Spring_2013/CmpE_272/Project/omnifaces-1.4.1.jar"/>
+	<classpathentry kind="lib" path="E:/Spring_2013/CmpE_272/Project/primefaces-3.5.jar"/>
+	<classpathentry kind="lib" path="E:/Spring_2013/CmpE_272/Project/primefaces-3.5-sources.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

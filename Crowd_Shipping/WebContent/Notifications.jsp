@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
 <%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html xmlns:p="http://primefaces.org/ui">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Notifications</title>
@@ -20,7 +21,9 @@
        
 	<div class="header">
 
-            <div class="logo"><a href="index.html">Crowd Shipping</a></div>
+            <div class="logo">
+            <img src="<%=request.getContextPath()%>/CSS/adaria/images/cs.jpg" width="70" height="70" alt="" title="" border="0" />
+            <a>Crowd Shipping</a></div>
             <div class="slogan">| Shipping for all</div> 
         
 			<div class="header_socials">
@@ -46,8 +49,9 @@
                 <h2>Navigate</h2>
                     <ul class="left_menu">
                         <li><h:commandLink action="#{profile.signout}" value="SignOut" ></h:commandLink></li>
-                        <li><h:commandLink action="Notifications.jsp">Notifications <span class="badge badge-important">6</span></h:commandLink> </li>
-                        <li><h:commandLink action="Neighbors.jsp">Search Neighbors</h:commandLink></li>
+                        <li><h:commandLink action="Profile.jsp?faces-redirect=true">Profile</h:commandLink> </li>
+                        <li><h:commandLink action="Neighbors.jsp?faces-redirect=true">Search Neighbors</h:commandLink></li>
+                        
                     </ul>
                 </div>
                 
@@ -71,7 +75,7 @@
 					</h:selectOneMenu>
                     </h:panelGrid>
                     
-					<h2>Requests for you</h2>
+					<h2>Requests within <h:outputText value="#{notifications.distance }"></h:outputText> miles </h2>
 					
 					<h:dataTable id="dynamicTable" binding="#{notifications.dataTable}" border="2" styleClass="table table-hover" rules="all" dir="ltr" cellpadding="5" value="#{notifications.packageList}" var="pkgDetails" >
 						<h:column> 

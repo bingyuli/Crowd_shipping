@@ -5,11 +5,158 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Receive</title>
+<title>Receive Package</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/adaria/style.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/bootstrap-responsive.css">
 </head>
-<body>
-<f:view>
+<body onload="setPlaceHolders()">
 
+
+<f:view>
+<h:form id="Profile">
+<div id="main_container">
+
+       
+	<div class="header">
+
+            <div class="logo">
+            <img src="<%=request.getContextPath()%>/CSS/adaria/images/cs.jpg" width="70" height="70" alt="" title="" border="0" />
+            <a>Crowd Shipping</a></div>
+            <div class="slogan">| Shipping for all</div> 
+        
+			<div class="header_socials">
+            <a href="#"><img src="<%=request.getContextPath()%>/CSS/adaria/images/rss.png" alt="" title="" border="0" /></a>
+            <a href="#"><img src="<%=request.getContextPath()%>/CSS/adaria/images/facebook.png" alt="" title="" border="0" /></a>
+            <a href="#"><img src="<%=request.getContextPath()%>/CSS/adaria/images/linkedin.png" alt="" title="" border="0" /></a>
+            <a href="#"><img src="<%=request.getContextPath()%>/CSS/adaria/images/twitter.png" alt="" title="" border="0" /></a>
+            <a href="#"><img src="<%=request.getContextPath()%>/CSS/adaria/images/flickr.png" alt="" title="" border="0" /></a>
+            </div>
+
+    </div> <!--end of header-->
+    
+ <script type="text/javascript">
+	
+    function setPlaceHolders()
+	{
+		var placeholders = ["201 S","4th Street","San Jose","California","USA", "95112"];
+		var elements = document.getElementsByTagName("input");
+		for (var i=0; i<elements.length; i++) 
+		{
+			elements[i].setAttribute("required", "required");
+			elements[i].setAttribute("placeholder", placeholders[i]);
+		}
+	}
+	
+</script>
+    
+	<div class="center_content_pages">
+        	<div class="pages_banner" style="left: 5%; top: 20%">
+            <center>
+            	<h:outputFormat value="Welcome #{login.username}"></h:outputFormat>
+            </center>
+            </div>
+        	<div class="left_content"> 
+                       
+                <div class="box290">
+                <h2>Navigate</h2>
+                    <ul class="left_menu">
+                        <li><h:commandLink action="#{profile.signout}" value="SignOut" ></h:commandLink></li>
+                        <li><h:commandLink action="Notifications.jsp?faces-redirect=true">Notifications 
+                        <span class="badge badge-important">
+                        	<h:outputText value="#{notifications.notificationCount }"></h:outputText>
+                        </span></h:commandLink> </li>
+                        <li><h:commandLink action="Neighbors.jsp?faces-redirect=true">Search Neighbors</h:commandLink></li>
+                        <li><h:commandLink action="Profile.jsp?faces-redirect=true">Profile</h:commandLink>
+                    </ul>
+                </div>
+     
+            </div> <!--end of left content-->
+	
+<div class="right_content">
+              
+                    <div class="form">
+					<h2>Select a service</h2>
+					
+					<h:selectOneMenu value="#{profile.serviceSelected}" valueChangeListener="#{profile.serviceRedirect}" onchange="this.form.submit();">
+						<f:selectItem itemValue="Select a service" value="Select a service" itemLabel="Select a service"/>
+						<f:selectItem itemValue="Send" value="Send" itemLabel="Send"/>
+						<f:selectItem itemValue="Receive" value="Receive" itemLabel="Receive"/>
+					</h:selectOneMenu>
+					
+			        <h2> Receive Package</h2>
+					<p> Details of package</p>
+					<h:panelGrid columns="4">
+						<h:outputLabel>Street1: </h:outputLabel>
+						<h:inputText id="sourceStreet1" value="#{receive.fromStreet1}"></h:inputText>
+						
+						<h:outputLabel>Street2: </h:outputLabel>
+						<h:inputText id="sourceStreet2" value="#{receive.fromStreet2}"></h:inputText>
+						
+						<h:outputLabel>City: </h:outputLabel>
+						<h:inputText id="sourceCity" value="#{receive.fromCity}"></h:inputText>
+						
+						<h:outputLabel>State: </h:outputLabel>
+						<h:inputText id="sourceState" value="#{receive.fromState}"></h:inputText>
+						
+						<h:outputLabel>Country: </h:outputLabel>
+						<h:inputText id="sourceCountry" value="#{receive.fromCountry}"></h:inputText>
+						
+						<h:outputLabel>Zip: </h:outputLabel>
+						<h:inputText id="sourceZip" value="#{receive.fromZipAddress}"></h:inputText>
+						
+					</h:panelGrid>
+					
+					<h:panelGrid columns="2">
+						<h:outputLabel>Package Size: </h:outputLabel>
+						<h:selectOneMenu style="width:auto" valueChangeListener="#{receive.submitPackageRequest}">
+							<f:selectItems value="#{receive.packageValue}"/>
+						</h:selectOneMenu>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="4">
+						<h:outputLabel>When: </h:outputLabel>
+						<h:selectOneMenu style="width:auto" valueChangeListener="#{receive.submitDayRequest}">
+							<f:selectItems value="#{receive.dayValue}" />
+						</h:selectOneMenu>
+						<h:selectOneMenu style="width:auto" valueChangeListener="#{receive.submitMonthRequest}" >
+							<f:selectItems value="#{receive.monthValue}"/>
+						</h:selectOneMenu>
+						<h:selectOneMenu style="width:auto" valueChangeListener="#{receive.submitYearRequest}">
+							<f:selectItems value="#{receive.yearValue}"/>
+						</h:selectOneMenu>
+					</h:panelGrid>
+					<h3>Comments(if any): </h3>
+    				<h:panelGrid>
+				         <h:inputTextarea id="comments" value="#{receive.comments}" styleClass="form_input" />
+				    </h:panelGrid>
+					<h:panelGrid>
+						<h:commandButton id="btnRequest" value="Submit" action="#{receive.submitRequest}" styleClass="btn btn-success" style="width:auto; left:50%"></h:commandButton>
+					</h:panelGrid>
+				               
+					</div>
+            </div>
+            
+            
+            
+        <div class="clear"></div>
+        </div>  
+
+<div class="footer">
+    <div class="copyrights">
+    Group 8 Spirit 
+    </div>
+    <div class="footer_right">
+    <a href="#">Home</a>
+    <a href="#">About Us</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Contact Us</a>
+    </div>
+    <div class="clear"></div>
+</div>
+
+</div> <!--end of main container-->
+</h:form>
 </f:view>
 </body>
 </html>

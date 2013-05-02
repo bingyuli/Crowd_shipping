@@ -27,7 +27,7 @@ public class Receive {
 	private static String username;
 	private String fromStreet1, fromStreet2, fromCity, fromState,fromCountry, url, address_query;
 	private String receivePakageQuery;
-	private String selectPkgSize, selectDay, selectMonth, selectYear, selectDate;
+	private String selectPkgSize, selectDay, selectMonth, selectYear, selectDate, comments;
 
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -35,6 +35,7 @@ public class Receive {
 	private String serviceSelected;
 	private boolean isLoggedIn;
 	private int fromZip;
+	private String fromZipAddress;
 	
 //	static
 //	{
@@ -56,6 +57,14 @@ public class Receive {
 //		
 //	}
 	
+	public String getFromZipAddress() {
+		return fromZipAddress;
+	}
+
+	public void setFromZipAddress(String fromZipAddress) {
+		this.fromZipAddress = fromZipAddress;
+	}
+
 	public Receive()
 	{
 		monthValue = new LinkedHashMap<String, Object>();
@@ -246,6 +255,15 @@ public class Receive {
 	}
 
 	
+	
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
 	public String getSelectPkgSize() {
 		return selectPkgSize;
 	}
@@ -329,7 +347,7 @@ public class Receive {
 	
 	public void submitRequest()
 	{
-		System.out.println("Perfect "+username+" " +fromStreet1+ " "+fromStreet2+" "+fromState+" "+fromZip+" "+fromCountry+" "+selectDay+" "+selectMonth+" "+selectYear+" "+selectPkgSize);
+		System.out.println("Perfect "+username+" " +fromStreet1+ " "+fromStreet2+" "+fromState+" "+fromZipAddress+" "+fromCountry+" "+selectDay+" "+selectMonth+" "+selectYear+" "+selectPkgSize+" " +comments);
 		
 		int year = Integer.parseInt(selectYear);
 	    String month = selectMonth;
@@ -349,8 +367,6 @@ public class Receive {
 	      e.printStackTrace();
 	    }
 	    
-	    
-		
 		url = "jdbc:mysql://localhost:3306/crowd_shipping";
 		try
 		{
@@ -358,7 +374,7 @@ public class Receive {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url,"root","root");
 			
-			receivePakageQuery = "insert into receive_package (`email`, `street1`, `street2`, `city`, `state`, `country`, `pincode`, `package_size`, `date`) values(?,?,?,?,?,?,?,?,?)";
+			receivePakageQuery = "insert into receive_package (`email`, `street1`, `street2`, `city`, `state`, `country`, `zip`, `package_size`, `date`,`comment`) values(?,?,?,?,?,?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(receivePakageQuery);
 			pstmt.setString(1, username);
@@ -367,9 +383,9 @@ public class Receive {
 			pstmt.setString(4, fromCity);
 			pstmt.setString(5, fromState);
 			pstmt.setString(6, fromCountry);
-			pstmt.setInt(7, fromZip);
+			pstmt.setInt(7, Integer.parseInt(fromZipAddress));
 			pstmt.setString(8, selectPkgSize);
-			
+			pstmt.setString(10, comments);
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		    
 			pstmt.setDate(9, sqlDate);
@@ -409,8 +425,8 @@ public class Receive {
 			
 			if(rs.next())
 			{
-				fromCity = rs.getString("city");
-				fromZip = rs.getInt("zip");
+//				fromCity = rs.getString("city");
+//				fromZip = rs.getInt("zip");
 			}
 //		
 		}catch (Exception e) {

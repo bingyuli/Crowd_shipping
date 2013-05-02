@@ -34,14 +34,8 @@ public class Send
 	private String serviceSelected, email, comments;
 	private Date dateinfo;
 	private boolean isLoggedIn;
-	private String selectPkgSize, selectDay, selectMonth, selectYear, selectDate;
+	private String selectPkgSize, selectDay, selectMonth, selectYear, selectDate, toZipAddress;
 	private int si_rs, fromZip, toZip;
-
-   
-        
-
-	
-	
 	
 	public String getEmail() {
 		return email;
@@ -60,6 +54,14 @@ public class Send
 //		this.pkgdt = pkgdt;
 //	}
 	
+	public String getToZipAddress() {
+		return toZipAddress;
+	}
+
+	public void setToZipAddress(String toZipAddress) {
+		this.toZipAddress = toZipAddress;
+	}
+
 	public String getComments() {
 		return comments;
 	}
@@ -439,7 +441,7 @@ public class Send
 			si_pstmt.setString(4, toCity);
 			si_pstmt.setString(5, toState);
 			si_pstmt.setString(6, toCountry);
-			si_pstmt.setInt(7, toZip);
+			si_pstmt.setInt(7, Integer.parseInt(toZipAddress));
     		si_pstmt.setString(8, selectPkgSize);
 			//si_pstmt.setString(8, "Medium");
 			

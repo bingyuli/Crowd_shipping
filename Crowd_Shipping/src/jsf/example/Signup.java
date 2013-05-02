@@ -4,6 +4,8 @@ import java.sql.*;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Signup 
 {
@@ -105,6 +107,25 @@ public class Signup
 		this.password = password;
 	}
 	
+	
+	public static String MD5(String md5) {
+        try {
+                MessageDigest md = MessageDigest.getInstance("SHA-1");
+                byte[] array = md.digest(md5.getBytes());
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < array.length; ++i) {
+                    sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+                }
+                return sb.toString();
+            } catch (NoSuchAlgorithmException e) {
+            
+        }
+        return null;
+    }
+	
+	
+	
+	
 	public String registerUser()
 	{
 		url = "jdbc:mysql://localhost:3306/crowd_shipping";
@@ -151,7 +172,7 @@ public class Signup
 			
 			login = conn.prepareStatement(login_query);
 			login.setString(1, email);
-			login.setString(2, password);
+			login.setString(2, MD5(password));
 			
 			
 			
@@ -173,21 +194,8 @@ public class Signup
 			e.printStackTrace();
 			return "Failed";
 		}
-		finally
-		{
-			try 
-			{
-				conn.close();
-				ua_pstmt.close();
-				ud_pstmt.close();
-				
-			} catch (SQLException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
-		}
+		
 		
 	}
 	}

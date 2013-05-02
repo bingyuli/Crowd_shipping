@@ -9,17 +9,17 @@
 	<managed-bean>
 		<managed-bean-name>login</managed-bean-name>
 		<managed-bean-class>jsf.example.Login</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>Signup</managed-bean-name>
 		<managed-bean-class>jsf.example.Signup</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>profile</managed-bean-name>
 		<managed-bean-class>jsf.example.Profile</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 		
 	</managed-bean>
 	<managed-bean>
@@ -37,38 +37,21 @@
 		<managed-bean-class>jsf.example.peopleNearBy</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	<navigation-rule>
-		<display-name>Login</display-name>
-		<from-view-id>/Login.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>Success</from-outcome>
-			<to-view-id>/LoginSuccess.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>Login</display-name>
-		<from-view-id>/Login.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>Failed</from-outcome>
-			<to-view-id>/FailedLogin.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>Signup</display-name>
-		<from-view-id>/Signup.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>Failed</from-outcome>
-			<to-view-id>/FailedLogin.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>Signup</display-name>
-		<from-view-id>/Signup.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>Success</from-outcome>
-			<to-view-id>/Login.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
+	<managed-bean>
+		<managed-bean-name>send</managed-bean-name>
+		<managed-bean-class>jsf.example.Send</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>receive</managed-bean-name>
+		<managed-bean-class>jsf.example.Receive</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>approve</managed-bean-name>
+		<managed-bean-class>jsf.example.Approve</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	
 	<factory>
     <render-kit-factory>org.omnifaces.renderkit.Html5RenderKitFactory</render-kit-factory>

@@ -34,7 +34,9 @@
        
 	<div class="header">
 
-            <div class="logo"><a href="index.html">Crowd Shipping</a></div>
+            <div class="logo">
+            <img src="<%=request.getContextPath()%>/CSS/adaria/images/cs.jpg" width="70" height="70" alt="" title="" border="0" />
+            <a>Crowd Shipping</a></div>
             <div class="slogan">| Shipping for all</div> 
         
 			<div class="header_socials">
@@ -60,8 +62,11 @@
                 <h2>Navigate</h2>
                     <ul class="left_menu">
                         <li><h:commandLink action="#{profile.signout}" value="SignOut" ></h:commandLink></li>
-                        <li><h:commandLink action="Notifications.jsp">Notifications <span class="badge badge-important">6</span></h:commandLink> </li>
-                        <li><h:commandLink action="Neighbors.jsp">Search Neighbors</h:commandLink></li>
+                        <li><h:commandLink action="Notifications.jsp?faces-redirect=true">Notifications 
+                        <span class="badge badge-important">
+                        	<h:outputText value="#{notifications.notificationCount }"></h:outputText>
+                        </span></h:commandLink> </li>
+                        <li><h:commandLink action="Profile.jsp">Profile</h:commandLink></li>
                     </ul>
                 </div>
                 

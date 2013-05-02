@@ -4,7 +4,7 @@ padding:0;
 font-size:12px;
 margin:0 auto;
 color:#545554;
-background:url(/bg.gif) repeat top left #FFFFFF;
+background:url(/cs.jpg) repeat top left #FFFFFF;
 }
 .clear{clear:both;}
 p{
@@ -28,7 +28,7 @@ float:left;
 padding:0px 0 0 35px;
 font-size:50px;
 margin:20px 0 0 0;
-background:url(images/logo.png) no-repeat left;
+background:url(/CSS/adaria/images/cs.jpg) no-repeat left;
 background-position:0px 22px;
 }
 .logo a{ color:#454546; text-decoration:none; letter-spacing:-3px;}
