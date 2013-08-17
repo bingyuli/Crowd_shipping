@@ -30,3 +30,6 @@ To directly run this web app, create a war file using Eclipse (right click on pr
 then copy the war file in <Tomcat Installation Directory>/webapps. Restart Tomcat and access it in your browser through
 http://localhost:8080/Crowd_Shipping/faces/Home.jsp
 NOTE: Don't forget to add faces in URL else it will not be able to find the facelets path.
+
+This code is free to copy, reuse and distribute without any consent. You can also contribute to make it better by working
+with us.
